@@ -6,6 +6,10 @@ from sphinx.util import logging
 
 from .mapper import AutoSaltSLSMapper
 
+__author__ = """John Hicks"""
+__email__ = 'john@tanoti.org'
+__version__ = '0.1.0'
+
 SETTINGS_STRING = [
     'title',
     'template_path',

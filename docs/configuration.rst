@@ -1,5 +1,8 @@
+Configuration
+===============
+
 Configuration Options
-======================
+----------------------
 
 .. confval:: autosaltsls_sources
 
@@ -64,6 +67,8 @@ Configuration Options
 
 .. confval:: autosaltsls_comment_ignore_prefix
 
+    Default: ``#!``
+
     Character/string used to denote lines which should be ignored when parsing a document comment block.
 
 .. confval:: autosaltsls_remove_first_space
@@ -85,7 +90,7 @@ Configuration Options
         autosaltsls_source_url_root = 'https://github.com/myuser/saltfiles'
 
 Source Settings
-================
+----------------
 The way in which the .sls files under a source location are parsed can be controlled using the following settings when
 `autosaltsls_sources` is supplied as a dict:
 
@@ -112,7 +117,7 @@ The way in which the .sls files under a source location are parsed can be contro
     Prefix to add to the base sls name when rendering rst file contents.
 
 Example
---------
+~~~~~~~~
 The following is a commented example of a source dict:
 
 .. code-block:: python
@@ -129,7 +134,8 @@ The following is a commented example of a source dict:
                 # Use the templates in this dir in place of the standard ones
                 'template_path': '_templates/autosaltsls/states',
             },
-            # Parse the 'pillar' directory under autosaltsls_sources_root and accept all other default settings
+            # Parse the 'pillar' directory under autosaltsls_sources_root
+            # and accept all other default settings
             'pillar': {},
             # Parse the 'reactor' directory under autosaltsls_sources_root
             'reactor': {
@@ -140,11 +146,14 @@ The following is a commented example of a source dict:
             'states/roles': {
                 # Replace the title with 'Rolos'
                 'title': 'Roles',
-                # Point the source code control url root tote correct location as it is really under 'states'
+                # Point the source code control url root tote correct location
+                # as it is really under 'states'
                 'url_root': 'states/roles',
-                # Set the build dir to be 'roles' so it ends up as a top-level entry
+                # Set the build dir to be 'roles' so it ends up as a top-level
+                # entry
                 'build_dir': 'roles',
-                # Prefix the sls names with 'roles.' as that is the state name a user needs to pass to state.apply, etc
+                # Prefix the sls names with 'roles.' as that is the state name
+                # a user needs to pass to state.apply, etc
                 'prefix': 'roles.',
             },
         }

@@ -50,9 +50,13 @@ start prefix (multiple directives can be supplied by separating them with commas
 
 .. confval:: step
 
+    Scope: Entry
+
     This entry is to be added to the numbered list of steps
 
 .. confval:: step_id
+
+    Scope: Entry
 
     Read the first line following this comment block and add it as summary, then add the entry to the numbered list
     of steps
