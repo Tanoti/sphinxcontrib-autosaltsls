@@ -1,0 +1,39 @@
+``{{ sls.basename }}``
+*******{{ "*" * sls.name|length }}
+
+.. sls:: {{ sls.name }}
+
+{%- if not sls.entries %}
+
+*No content*
+{%- else %}
+{%-   if sls.header.has_text %}
+
+*{{ sls.header.summary }}*
+
+{{ sls.header.content }}
+{%-   endif %}
+
+{%-   if sls.initfile %}
+
+:doc:`[more] <init>`
+{%-   endif %}
+{%- endif %}
+
+{%- if sls.child_count %}
+
+Elements
+^^^^^^^^
+.. contents::
+    :depth: 1
+    :local:
+
+{%- for child_sls in sls.children %}
+{%- if not child_sls.initfile and child_sls.docname %}
+
+:doc:`{{ child_sls.docname }}`
+-------{{ "-" * child_sls.docname|length }}
+{{ child_sls.header.summary }}
+{%- endif %}
+{%- endfor %}
+{%- endif %}

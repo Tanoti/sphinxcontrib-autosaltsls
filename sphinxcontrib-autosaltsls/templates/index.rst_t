@@ -1,0 +1,24 @@
+{{ obj.title }}
+*******{{ "*" * obj.title|length }}
+
+{%- if obj.top_files %}
+
+Top Files
+^^^^^^^^^^
+.. toctree::
+    :maxdepth: 1
+
+{%   for sls_obj in obj.top_files %}
+    {{ sls_obj.toc_entry }}
+{%-   endfor %}
+{%- endif %}
+
+
+Entries
+^^^^^^^^^
+.. toctree::
+    :maxdepth: 1
+
+{% for sls_obj in obj.other_files %}
+    {{ sls_obj.toc_entry }}
+{%- endfor %}

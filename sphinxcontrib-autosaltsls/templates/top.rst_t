@@ -1,0 +1,31 @@
+``{{ sls.filename}}``
+*******{{ "*" * sls.filename|length }}
+{%- if not sls.entries %}
+*No content*
+{%- else %}
+
+{%-   if sls.header.has_text %}
+
+*{{ sls.header.summary }}*
+
+{{ sls.header.content }}
+{%-   endif %}
+
+{%-   for entry in sls.body %}
+{%      if entry.has_text %}
+{%-       if entry.summary|length < 80 %}
+{{ entry.summary }}
+~~~~~~~{{ "~" * entry.summary|length }}
+{%-       else %}
+{{ entry.summary }}
+{%-       endif %}
+
+{{ entry.content }}
+{%-     endif %}
+{%-   endfor %}
+{%- endif %}
+
+{%- if sls.source_url %}
+
+`[Source] <{{ sls.source_url }}>`_
+{%- endif %}
