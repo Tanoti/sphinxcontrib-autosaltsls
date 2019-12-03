@@ -1,49 +1,3 @@
-Sphinx AutoSaltSLS
-*******************
-
-Sphinx AutoSaltSLS provides  a way to automatically document Salt .sls files (e.g. states, pillar, reactors, etc) using
-simple directives in the comments blocks of those files.
-
-A comment block is identified using a block start string (default is ``###`) and contains all subsequent lines that start
-with a given comment character (default is ``#``). The block ends when a new start string or a non-comment line is read.
-Directives can be given in the comment block to control how the lines are parsed (see `Comment Block Format`).
-
-Getting Started
-================
-
-The following steps will walk through how to add AutoSaltSLS to an existing Sphinx project. For instructions on how to
-set up a Sphinx project, see Sphinx's documentation on `Getting Started <https://www.sphinx-doc.org/en/master/usage/quickstart.html>`_.
-
-Installation
--------------
-
-AutoSaltSLS can be installed through pip:
-
-.. code-block:: bash
-
-    pip install sphinxcontrib-autosaltsls
-
-Next, add and configure AutoSaltSLS in your Sphinx project's ``conf.py``.
-
-.. code-block:: python
-
-    extensions.append('sphinxcontrib-autosaltsls')
-
-    autosaltsls_sources = {
-        'states': {
-            'title': 'States',
-            'exclude': [
-                'roles',
-            ],
-            'template_path': '_templates/autosaltsls/states',
-        },
-        'pillar' : {
-            'title': 'Pillar'
-        },
-    }
-
-The documentation will be built into the location specified by ``autosaltsls_build_root`` (defaults to '.')
-
 Configuration Options
 ======================
 
@@ -194,14 +148,3 @@ The following is a commented example of a source dict:
                 'prefix': 'roles.',
             },
         }
-
-Comment Block Format
-=====================
-
-A comment block is a contiguous set of commented lines which follow a block start marker. It is semantically divided
-into a Summary (all text to the first blank line) and Content (the rest).
-
-A block is detected by the parsing engine when it detects the start string specified by ``autosaltsls_doc_prefix``
-(default is '###') and then all subsequent lines that start with the comment character specified by
-``autosaltsls_comment_prefix`` (default is '#') are loaded as data. The block ends when the first non-comment line
-or new block start string is read.
