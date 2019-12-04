@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 class AutoSaltSLSMapper(object):
     """
-    Mapper to read sls files from a source location and to generate the relvant .rst files.
+    Mapper to read sls files from a source location and to generate the relevant .rst files.
 
     app
         Sphinx app instance
@@ -180,17 +180,17 @@ class AutoSaltSLSMapper(object):
 
         rep_path_idx = self.source.count(os.path.sep) + 1
 
-        for dirpath, dirnames, filenames in os.walk(self.source):
+        for dir_path, dir_names, filenames in os.walk(self.source):
             # Remove the source from the dir we are processing as this will give us the sls namespace
-            p = pathlib.Path(dirpath)
-            relpath = str(pathlib.Path(*p.parts[rep_path_idx:]))
+            p = pathlib.Path(dir_path)
+            rel_path = str(pathlib.Path(*p.parts[rep_path_idx:]))
 
-            source_url_path = self.url_root + '/' + relpath.replace('\\', '/')
+            source_url_path = self.url_root + '/' + rel_path.replace('\\', '/')
 
             # Skip any paths in the exclude list
-            if relpath in self.exclude:
-                logger.info(bold('[AutoSaltSLS] ') + darkgreen('Ignoring {0}'.format(dirpath)))
-                dirnames[:] = []
+            if rel_path in self.exclude:
+                logger.info(bold('[AutoSaltSLS] ') + darkgreen('Ignoring {0}'.format(dir_path)))
+                dir_names[:] = []
                 filenames[:] = []
                 continue
 
@@ -198,11 +198,11 @@ class AutoSaltSLSMapper(object):
             sls_parent = None
 
             # Create a parent container object if not in the top level
-            if relpath != '.':
-                logger.debug('[AutoSaltSLS] Creating sls object for {0} (No file)'.format(relpath))
+            if rel_path != '.':
+                logger.debug('[AutoSaltSLS] Creating sls object for {0} (No file)'.format(rel_path))
                 sls_parent = AutoSaltSLS(
                     self.app,
-                    relpath,
+                    rel_path,
                     self.full_source,
                     no_first_space=self.settings.get('no_first_space'),
                     source_url_root=source_url_path,
@@ -220,13 +220,13 @@ class AutoSaltSLSMapper(object):
 
                     # Create an sls object for the file
                     logger.debug('[AutoSaltSLS] Creating sls object for {0} ({1})'.format(
-                        relpath if relpath != '.' else '[root]',
+                        rel_path if rel_path != '.' else '[root]',
                         file,
                     ))
                     sls_obj = AutoSaltSLS(
                         self.app,
                         file,
-                        os.path.join(self.full_source, relpath) if relpath != '.' else self.full_source,
+                        os.path.join(self.full_source, rel_path) if rel_path != '.' else self.full_source,
                         parent_name=sls_parent.name if sls_parent else None,
                         no_first_space=self.settings.get('no_first_space'),
                         source_url_root=source_url_path,

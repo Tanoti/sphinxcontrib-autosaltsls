@@ -384,6 +384,7 @@ class AutoSaltSLS(object):
         """
         if self.entries:
             return '\n\n'.join([x.text for x in self.entries])
+
         return ''
 
     @property
