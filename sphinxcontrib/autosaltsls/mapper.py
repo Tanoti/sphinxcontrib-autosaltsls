@@ -53,19 +53,25 @@ class AutoSaltSLSMapper(object):
             ))
 
         # Work out the build root location for this source
-        if not os.path.isabs(app.config.autosaltsls_build_root):
-            self.build_root = os.path.normpath(os.path.join(
+        build_root = app.config.autosaltsls_build_root
+        if not os.path.isabs(build_root):
+            build_root = os.path.normpath(os.path.join(
                 app.confdir,
                 app.config.autosaltsls_build_root,
-                self.build_dir.replace('/', os.path.sep) if self.build_dir else self.source,
             ))
 
+        self.build_root = os.path.normpath(os.path.join(
+            build_root,
+            self.build_dir.replace('/', os.path.sep) if self.build_dir else self.source,
+        ))
+
         # Prefix the source url with the root from the config
-        if self.url_root is None:
-            self.url_root = app.config.autosaltsls_source_url_root + '/' + source
-        else:
-            if not self.url_root.startswith('http'):
-                self.url_root = app.config.autosaltsls_source_url_root + '/' + self.url_root
+        if app.config.autosaltsls_source_url_root:
+            if self.url_root is None:
+                self.url_root = app.config.autosaltsls_source_url_root + '/' + source
+            else:
+                if not self.url_root.startswith('http'):
+                    self.url_root = app.config.autosaltsls_source_url_root + '/' + self.url_root
 
         # Work out the jinja template dirs to use
         template_paths = [
@@ -170,22 +176,31 @@ class AutoSaltSLSMapper(object):
             Count of sls objects found
         """
         # Check the source dir exists
-        if not os.path.isdir(self.source):
-            raise ExtensionError("Source path '{0}' does not exist")
+        if not os.path.isdir(self.full_source):
+            raise ExtensionError("Source path '{0}' does not exist".format(self.full_source))
 
         logger.info(bold('[AutoSaltSLS] ') + 'Scanning {0}'.format(self.full_source))
+
+        cwd = os.getcwd()
+        os.chdir(self.full_source)
 
         # Clear out any old data
         self.sls_objects = []
 
-        rep_path_idx = self.source.count(os.path.sep) + 1
+        # rep_path_idx = self.source.count(os.path.sep) + 1
 
-        for dir_path, dir_names, filenames in os.walk(self.source):
+        for dir_path, dir_names, filenames in os.walk('.'):
+            # logger.debug('JPH - {0}, {1}, {2}, {3}'.format(dir_path, dir_names, filenames, rep_path_idx))
             # Remove the source from the dir we are processing as this will give us the sls namespace
             p = pathlib.Path(dir_path)
-            rel_path = str(pathlib.Path(*p.parts[rep_path_idx:]))
+            rel_path = dir_path
+            if dir_path != '.':
+                rel_path = str(pathlib.Path(*p.parts[:]))
 
-            source_url_path = self.url_root + '/' + rel_path.replace('\\', '/')
+            source_url_path = None
+
+            if self.url_root:
+                source_url_path = self.url_root + '/' + rel_path.replace('\\', '/')
 
             # Skip any paths in the exclude list
             if rel_path in self.exclude:
@@ -252,6 +267,9 @@ class AutoSaltSLSMapper(object):
                 sls_obj.set_initfile(
                     rst_filename=rst_filename,
                 )
+
+        # Change back to the starting dir
+        os.chdir(cwd)
 
         # Report the count of objects found
         logger.info(bold('[AutoSaltSLS] ') + 'Found {0} top-level sls entities and {1} sub-entities'.format(

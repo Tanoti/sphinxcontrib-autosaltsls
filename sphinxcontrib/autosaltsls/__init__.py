@@ -1,6 +1,9 @@
 """
 Sphinx Auto-SaltSLS top-level extension
 """
+import os
+
+from jinja2 import Environment, FileSystemLoader
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
 
@@ -63,6 +66,13 @@ def run_autosaltsls(app):
                     )
                 )
 
+    # Check some other values
+    if not isinstance(app.config.autosaltsls_write_index_page, bool):
+        raise ExtensionError("Config value 'autosaltsls_write_index_page' must be True or False only")
+
+    if not isinstance(app.config.autosaltsls_index_template_path, str):
+        raise ExtensionError("Config value 'autosaltsls_index_template_path' mujst be a string")
+
     # Loop over the sources and do the work
     for source, settings in sources.items():
         # Create a mapper for the source
@@ -77,6 +87,45 @@ def run_autosaltsls(app):
         # Write the rst files in the correct order
         sphinx_mapper.write()
 
+    # Write the master index
+    if app.config.autosaltsls_write_index_page:
+        # Work out the jinja template dirs to use
+        template_paths = [
+            os.path.normpath(os.path.join(os.path.realpath(__file__), '..', 'templates'))
+        ]
+
+        index_template_path = app.config.autosaltsls_index_template_path
+        if index_template_path:
+            if not os.path.isabs(index_template_path):
+                index_template_path = os.path.normpath(os.path.join(app.confdir, index_template_path))
+
+            template_paths.insert(0, index_template_path)
+
+        # Create the jinja environment to do the work
+        jinja_env = Environment(
+            loader=FileSystemLoader(template_paths),
+        )
+
+        output_path = app.config.autosaltsls_build_root
+        if not os.path.abspath(output_path):
+            output_path = os.path.join(
+                app.confdir,
+                output_path,
+            )
+
+        output_file = os.path.join(output_path, 'index.rst')
+
+        template_obj = jinja_env.get_template('master.rst_t')
+
+        logger.debug("[AutoSaltSLS] Rendering master index '{0}' using '{1}'".format(
+            output_file,
+            template_obj.filename,
+        ))
+
+        # Render the template using Jinja
+        with open(output_file, 'w') as outfile:
+            outfile.write(template_obj.render(project=app.config.project))
+
 
 def setup(app):
     app.connect("builder-inited", run_autosaltsls)
@@ -89,5 +138,8 @@ def setup(app):
     app.add_config_value('autosaltsls_remove_first_space', True, 'html')
     app.add_config_value('autosaltsls_source_url_root', None, 'html')
     app.add_config_value('autosaltsls_build_root', '.', 'env')
+    app.add_config_value('autosaltsls_write_index_page', False, 'env')
+    app.add_config_value('autosaltsls_index_template_path', '', 'env')
 
+    # Add an object type for the sls files
     app.add_object_type('sls', 'sls', objname='sls file', indextemplate='pair: %s; sls file')

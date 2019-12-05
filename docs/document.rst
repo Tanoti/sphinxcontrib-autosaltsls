@@ -1,5 +1,5 @@
-Document Comment Block Format
-==============================
+Comment Block Format
+=====================
 
 A document comment block is a contiguous set of commented lines which follow an arbitrary block start marker. It is
 semantically divided into a Summary (all text to the first blank line) and Content (the rest) and is known as an 'entry'
@@ -25,7 +25,7 @@ start prefix (multiple directives can be supplied by separating them with commas
 
     Scope: File
 
-    Identifies the current sls file as a salt top file (See `https://docs.saltstack.com/en/latest/ref/states/top.html`_).
+    Identifies the current sls file as a salt top file (See `Salt Top Files <https://docs.saltstack.com/en/latest/ref/states/top.html>`_).
     Files with the name ``top.sls`` are automatically identified so this is only needed for alternate top files that
     might be passed to ``state.top``.
 
