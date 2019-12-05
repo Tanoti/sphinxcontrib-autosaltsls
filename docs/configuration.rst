@@ -17,7 +17,7 @@ Configuration Options
 
                 autosaltsls_sources = '/srv/salt'
 
-        2. As a list of paths if you want to accept all the default source settings (see `Source Settings`):
+        2. As a list of paths if you want to accept all the default source settings (see :ref:`Source Settings`_):
 
             .. code-block:: python
 

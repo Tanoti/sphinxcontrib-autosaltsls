@@ -1,0 +1,39 @@
+{{ obj.title }}
+*******{{ "*" * obj.title|length }}
+
+.. note:: This is a custom index supplied from ``_templates/states`` to be used as an example.
+
+These states can be called on a minion using the ``salt-call state.apply`` command.
+
+.. code-block:: bash
+
+    sudo salt-call state.apply <state> test=False
+
+A highstate can be run using the command ``salt-call state.highstate``.
+
+.. code-block:: bash
+
+    sudo salt-call state.highstate [<topfile>] test=False
+
+
+{%- if obj.top_files %}
+
+Top Files
+^^^^^^^^^^
+.. toctree::
+    :maxdepth: 1
+
+{%   for sls_obj in obj.top_files %}
+    {{ sls_obj.toc_entry }}
+{%-   endfor %}
+{%- endif %}
+
+
+{% if obj.top_files %}Other {% endif %}Files
+^^^^^^^^^^^^^^^^
+.. toctree::
+    :maxdepth: 1
+
+{% for sls_obj in obj.other_files %}
+    {{ sls_obj.toc_entry }}
+{%- endfor %}
