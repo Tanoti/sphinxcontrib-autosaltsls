@@ -32,9 +32,6 @@ Next, add and configure AutoSaltSLS in your Sphinx project's ``conf.py``.
     autosaltsls_sources = {
         'states': {
             'title': 'States',
-            'exclude': [
-                'roles',
-            ],
             'template_path': '_templates/autosaltsls/states',
         },
         'pillar' : {
