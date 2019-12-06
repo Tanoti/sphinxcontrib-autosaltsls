@@ -16,14 +16,15 @@ import sys
 
 # Get the project root dir, which is the parent dir of this
 cwd = os.getcwd()
-project_root = os.path.dirname(cwd)
+project_root = os.path.join(os.path.dirname(cwd), 'sphinxcontrib')
 
 # Insert the project root dir as the first element in the PYTHONPATH.
 # This lets us ensure that the source package is imported, and that its
 # version is used.
 sys.path.insert(0, project_root)
+print(sys.path)
 
-import sphinxcontrib_autosaltsls
+import autosaltsls
 
 # -- Project information -----------------------------------------------------
 
@@ -32,9 +33,9 @@ copyright = '2019, John Hicks'
 author = 'John Hicks'
 
 # The short X.Y version.
-version = sphinxcontrib_autosaltsls.__version__
+version = autosaltsls.__version__
 # The full version, including alpha/beta/rc tags.
-release = sphinxcontrib_autosaltsls.__version__
+release = autosaltsls.__version__
 
 # -- General configuration ---------------------------------------------------
 
@@ -68,10 +69,14 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+
 #
 # Sphinx application setup
 #
 def setup(app):
-    app.add_object_type('confval', 'confval',
-                        objname='configuration value',
-                        indextemplate='pair: %s; configuration value')
+    app.add_object_type(
+        'confval',
+        'confval',
+        objname='configuration value',
+        indextemplate='pair: %s; configuration value'
+    )

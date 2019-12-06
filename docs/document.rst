@@ -14,7 +14,7 @@ or new block start string is read. Lines that begin with the ignore prefix speci
 The first document comment block in a file is denoted as being the Header and all other comment blocks are the Body. This
 allows for the indexing routines to extract the header summaries, etc.
 
-Any valid Sphinx formatting commands can be used in a document comment block.
+Any valid Sphinx formatting commands should be able to be used in a document comment block.
 
 Directives
 -----------
@@ -60,3 +60,35 @@ start prefix (multiple directives can be supplied by separating them with commas
 
     Read the first line following this comment block and add it as summary, then add the entry to the numbered list
     of steps
+
+Example
+--------
+The following is a contrived comment block::
+
+    ###
+    # This line is the header summary
+    #
+    # Text following a blank line will be the content.
+    #
+
+    ###
+    # Any subsequent comment blocks are the body with a summary...
+    #
+    # ... and content
+
+    ### summary_id
+    # This text will be the content after the summary which has been
+    # generated using the first non-comment line following the comment
+    # block.
+    This-line-becomes-a-summary
+
+    ### step
+    # This line is the summary for a numbered step
+    #
+    # And this text will be the content
+
+    ### step_id
+    # This text will be the content after the summary which has been
+    # generated using the first non-comment line following the comment
+    # block. The entry is also rendered as a numbered step.
+    This-line-becomes-a-step-summary
