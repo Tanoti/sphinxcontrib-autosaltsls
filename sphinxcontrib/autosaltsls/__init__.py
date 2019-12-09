@@ -128,6 +128,9 @@ def run_autosaltsls(app):
 
 
 def setup(app):
+    """
+    Setup the Sphinx app with the default config values and add the ``sls`` object type.
+    """
     app.connect("builder-inited", run_autosaltsls)
 
     app.add_config_value('autosaltsls_sources_root', '..', 'env')

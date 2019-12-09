@@ -147,9 +147,9 @@ class AutoSaltSLS(object):
     @property
     def annotated_body(self):
         """
-        Return the debug annotated text output for all body entries with '\n' newline.
+        Return the debug annotated text output for all body entries with newline terminators.
 
-        :return:
+        :return: str
         """
         return '\n'.join([x.annotated_text for x in self.body])
 
@@ -176,7 +176,7 @@ class AutoSaltSLS(object):
     @property
     def body_text(self):
         """
-        Return all the text for the body entries as one string with '\n' newlines.
+        Return all the text for the body entries as one string with newline terminators.
 
         :return: str
         """
@@ -378,7 +378,7 @@ class AutoSaltSLS(object):
     @property
     def text(self):
         """
-        Return all the entries including the header as a string with '\n' newlines.
+        Return all the entries including the header as a string with newline terminators.
 
         :return: str
         """
@@ -472,27 +472,27 @@ class AutoSaltSLSEntry(object):
     text : None
         Initial text to place in ``lines``
 
-    Directives
-    ----------
-    Directives are run-time changes to apply to an entry. They are specified on the document prefix line as a
-    # comma-separated list
+    **Directives**
 
-    include
-        The lines following this comment block will be an ``include:` section and should be parsed to add the YAML list
-        data items to the ``includes`` list
+        Directives are run-time changes to apply to an entry. They are specified on the document prefix line as a
+        comma-separated list
 
-    show_id
-         Read the first line following this comment block and add it as a content line
+        include
+            The lines following this comment block will be an ``include:`` section and should be parsed to add the YAML list
+            data items to the ``includes`` list
 
-    step
-        This comment block entry is to be added to the numbered list of steps
+        show_id
+             Read the first line following this comment block and add it as a content line
 
-    step_id
-        Read the first line following this comment block and add it as summary then add the entry to the numbered list
-        of steps
+        step
+            This comment block entry is to be added to the numbered list of steps
 
-    summary_id
-         Read the first line following this comment block and add it as the entry summary
+        step_id
+            Read the first line following this comment block and add it as summary then add the entry to the numbered list
+            of steps
+
+        summary_id
+             Read the first line following this comment block and add it as the entry summary
     """
     def __init__(self, text=None):
         self.lines = []
@@ -613,7 +613,7 @@ class AutoSaltSLSEntry(object):
     @property
     def text(self):
         """
-        Return all the stored lines as a string joined with '\n' newlines.
+        Return all the stored lines as a string joined with newline terminators.
 
         :return: str
         """

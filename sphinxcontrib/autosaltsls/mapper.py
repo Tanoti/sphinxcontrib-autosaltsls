@@ -94,8 +94,6 @@ class AutoSaltSLSMapper(object):
     def load(self):
         """
         Read the files associated with the sls objects and parse their comment blocks
-
-        :return:
         """
         # Process all the sls objects and their files
         for sls_obj in status_iterator(
@@ -170,10 +168,9 @@ class AutoSaltSLSMapper(object):
 
     def scan(self):
         """
-        Scan the source dir for *.sls files and create an AutoSaltSLS object for each
+        Scan the source dir for ``*.sls`` files and create an AutoSaltSLS object for each
 
-        :return: int
-            Count of sls objects found
+        :return: int (count of sls objects found)
         """
         # Check the source dir exists
         if not os.path.isdir(self.full_source):
@@ -291,8 +288,6 @@ class AutoSaltSLSMapper(object):
     def write(self):
         """
         Generate the rst files for the loaded sls objects
-
-        :return:
         """
         # Create the build dir for our source
         if not os.path.exists(self.build_root):
