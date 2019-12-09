@@ -478,8 +478,8 @@ class AutoSaltSLSEntry(object):
         comma-separated list
 
         include
-            The lines following this comment block will be an ``include:`` section and should be parsed to add the YAML list
-            data items to the ``includes`` list
+            The lines following this comment block will be an ``include:`` section and should be parsed to add the YAML
+            list data items to the ``includes`` list
 
         show_id
              Read the first line following this comment block and add it as a content line
@@ -488,8 +488,8 @@ class AutoSaltSLSEntry(object):
             This comment block entry is to be added to the numbered list of steps
 
         step_id
-            Read the first line following this comment block and add it as summary then add the entry to the numbered list
-            of steps
+            Read the first line following this comment block and add it as summary then add the entry to the numbered
+            list of steps
 
         summary_id
              Read the first line following this comment block and add it as the entry summary
