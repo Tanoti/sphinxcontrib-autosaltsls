@@ -61,8 +61,8 @@ start prefix (multiple directives can be supplied by separating them with commas
     Read the first line following this comment block and add it as summary, then add the entry to the numbered list
     of steps
 
-Example
---------
+Configuration Example
+----------------------
 The following is a contrived comment block::
 
     ###

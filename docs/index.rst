@@ -8,6 +8,7 @@ Welcome to Sphinx AutoSaltSLS's documentation!
    readme
    configuration
    document
+   templates
    example
 
 Indices and tables
