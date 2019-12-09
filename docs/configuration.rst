@@ -17,13 +17,13 @@ Configuration Options
 
                 autosaltsls_sources = '/srv/salt'
 
-        2. As a list of paths if you want to accept all the default source settings (see `Source Settings`_):
+        2. As a list of paths if you want to accept all the default source settings:
 
             .. code-block:: python
 
                 autosaltsls_sources = ['states', 'pillar']
 
-        3.  As a dict of source location to its settings:
+        3.  As a dict of source location to its settings (see :ref:`Source Settings`):
 
             .. code-block:: python
 
@@ -89,6 +89,19 @@ Configuration Options
 
         autosaltsls_source_url_root = 'https://github.com/myuser/saltfiles'
 
+.. confval:: autosaltsls_write_index_page
+
+    Default: ``False``
+
+    Generate a top-level ``index.rst`` file which has a toctree that references the source-level index files.
+
+.. confval:: autosaltsls_index_template_path
+
+    Default: ``''``
+
+    Location of an override ``master.rst_t`` file to be used when generating the top-level index file
+    (See  :ref:`Templates`).
+
 Source Settings
 ----------------
 The way in which the .sls files under a source location are parsed can be controlled using the following settings when
@@ -96,23 +109,33 @@ The way in which the .sls files under a source location are parsed can be contro
 
 .. confval:: title
 
-    The title to use on the index.rst page, defaults to the source key.
+    Default: ``<source key>``
+
+    The title to use on the index.rst page.
 
 .. confval:: exclude
+
+    Default: ``None``
 
     A list of paths relative to the source location to exclude from parsing. This can be useful where a sub-directory
     of states need to be documented as their own source and corresponding top-level index entry.
 
 .. confval:: template_path
 
+    Default: ``None``
+
     The location of the template files for this source (index.rst_t, main.rst_t, sls.rst_t, top.rst_t). This is deemed
-    to be relative to the Sphinx config path unless provided as an absolute path.
+    to be relative to the Sphinx config path unless provided as an absolute path. (See :ref:`Templates`).
 
 .. confval:: build_dir
 
-    Path to put the built .rst files in, defaults to ``<autosaltsls_build_root>/<source>``.
+    Default: ``<autosaltsls_build_root>/<source>``.
+
+    Path to put the built .rst files.
 
 .. confval:: prefix
+
+    Default: ``''``
 
     Prefix to add to the base sls name when rendering rst file contents.
 
