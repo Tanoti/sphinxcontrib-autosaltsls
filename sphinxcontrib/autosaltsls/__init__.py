@@ -11,7 +11,7 @@ from .mapper import AutoSaltSLSMapper
 
 __author__ = """John Hicks"""
 __email__ = 'johnhicks@fico.com'
-__version__ = '0.1.0'
+__version__ = '0.1.2'
 
 SETTINGS_STRING = [
     'title',
@@ -71,7 +71,7 @@ def run_autosaltsls(app):
         raise ExtensionError("Config value 'autosaltsls_write_index_page' must be True or False only")
 
     if not isinstance(app.config.autosaltsls_index_template_path, str):
-        raise ExtensionError("Config value 'autosaltsls_index_template_path' mujst be a string")
+        raise ExtensionError("Config value 'autosaltsls_index_template_path' must be a string")
 
     # Loop over the sources and do the work
     for source, settings in sources.items():
