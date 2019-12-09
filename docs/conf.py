@@ -12,7 +12,6 @@
 #
 import os
 import sys
-# sys.path.insert(0, os.path.abspath('.'))
 
 # Get the project root dir, which is the parent dir of this
 cwd = os.getcwd()
@@ -22,8 +21,6 @@ project_root = os.path.join(os.path.dirname(cwd), 'sphinxcontrib')
 # This lets us ensure that the source package is imported, and that its
 # version is used.
 sys.path.insert(0, project_root)
-print(sys.path)
-
 import autosaltsls
 
 # -- Project information -----------------------------------------------------
@@ -44,6 +41,7 @@ release = autosaltsls.__version__
 # ones.
 extensions = [
     'sphinx.ext.autosectionlabel',
+    'sphinx.ext.autodoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
