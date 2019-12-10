@@ -15,7 +15,7 @@ setup(
     long_description_content_type='text/x-rst',
     url='https://bitbucket.tools.ficoccs-dev.net/projects/DEVOPS/repos/ccs-standard-templates/browse',
     author='John Hicks',
-    author_email='johnhicks@fico.com',
+    author_email='john.p.hicks@gmail.com',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Sphinx :: Extension',
