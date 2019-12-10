@@ -11,7 +11,7 @@ from .mapper import AutoSaltSLSMapper
 
 __author__ = """John Hicks"""
 __email__ = 'johnhicks@fico.com'
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 SETTINGS_STRING = [
     'title',
