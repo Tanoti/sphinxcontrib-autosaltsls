@@ -1,7 +1,7 @@
 Sphinx AutoSaltSLS
 *******************
 
-.. image:: https://img.shields.io/pypi/v/phinxcontrib-autosaltsls.svg
+.. image:: https://img.shields.io/pypi/v/sphinxcontrib-autosaltsls.svg
         :target: https://pypi.python.org/pypi/sphinxcontrib-autosaltsls
 
 .. image:: https://travis-ci.com/Tanoti/sphinxcontrib-autosaltsls.svg?branch=master
