@@ -59,4 +59,5 @@ Next, add and configure AutoSaltSLS in your Sphinx project's ``conf.py``.
 
 The documentation will be built into the location specified by ``autosaltsls_build_root`` (defaults to '.')
 
-To configure AutoAPI behaviour further, see the Configuration documentation.
+To configure AutoAPI behaviour further, see the
+`Configuration documentation <https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/>`_.
