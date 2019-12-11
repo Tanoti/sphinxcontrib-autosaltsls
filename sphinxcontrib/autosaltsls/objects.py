@@ -6,6 +6,7 @@ import re
 
 from sphinx.util import logging
 from sphinx.errors import ExtensionError
+
 # noinspection PyUnresolvedReferences
 from sphinx.util.console import darkgreen, bold
 
@@ -46,18 +47,19 @@ class AutoSaltSLS(object):
     prefix: None
         Prefix to add to the base sls name when rendering rst file contents
     """
+
     def __init__(
-            self,
-            app,
-            basename,
-            source_path,
-            parent_name=None,
-            doc_prefix=None,
-            comment_prefix=None,
-            comment_ignore_prefix=None,
-            no_first_space=True,
-            source_url_root=None,
-            prefix=None,
+        self,
+        app,
+        basename,
+        source_path,
+        parent_name=None,
+        doc_prefix=None,
+        comment_prefix=None,
+        comment_ignore_prefix=None,
+        no_first_space=True,
+        source_url_root=None,
+        prefix=None,
     ):
         self.app = app
         self.basename, self.filename = self._parse_name(basename)
@@ -94,8 +96,8 @@ class AutoSaltSLS(object):
             self.source_url_root = app.config.autosaltsls_source_url_root
 
         # Initialise some properties
-        self.topfile = True if self.filename == 'top.sls' else False
-        self.initfile = True if self.filename == 'init.sls' else False
+        self.topfile = True if self.filename == "top.sls" else False
+        self.initfile = True if self.filename == "init.sls" else False
         self.children = []
         self.entries = []
         self.steps = []
@@ -108,13 +110,13 @@ class AutoSaltSLS(object):
 
         # Work out some related filenames
         if self.filename:
-            self.rst_filename = self.filename.replace('.sls', '.rst')
-            self.docname = self.filename.replace('.sls', '')
+            self.rst_filename = self.filename.replace(".sls", ".rst")
+            self.docname = self.filename.replace(".sls", "")
         else:
-            self.rst_filename = self.basename + '.rst'
+            self.rst_filename = self.basename + ".rst"
 
         if self.source_url_root and self.filename:
-            self.source_url = self.source_url_root + '/' + self.filename
+            self.source_url = self.source_url_root + "/" + self.filename
 
     def __str__(self):
         return self.name
@@ -151,7 +153,7 @@ class AutoSaltSLS(object):
 
         :return: str
         """
-        return '\n'.join([x.annotated_text for x in self.body])
+        return "\n".join([x.annotated_text for x in self.body])
 
     @property
     def child_count(self):
@@ -180,7 +182,7 @@ class AutoSaltSLS(object):
 
         :return: str
         """
-        return '\n\n'.join([x.text for x in self.body])
+        return "\n\n".join([x.text for x in self.body])
 
     @property
     def header(self):
@@ -207,18 +209,14 @@ class AutoSaltSLS(object):
         name = self.basename
 
         if self.parent_name:
-            name = '{0}.{1}'.format(self.parent_name, self.basename)
+            name = "{0}.{1}".format(self.parent_name, self.basename)
         elif self.prefix:
             name = self.prefix + name
 
         return name
 
     def output_rst(
-            self,
-            jinja_env,
-            output_dir,
-            filename=None,
-            template=None,
+        self, jinja_env, output_dir, filename=None, template=None,
     ):
         """
         Generate the base rst file for this sls object.
@@ -242,18 +240,18 @@ class AutoSaltSLS(object):
 
         # Get the Jinja template
         if not template:
-            template = 'top.rst_t' if self.topfile else 'sls.rst_t'
+            template = "top.rst_t" if self.topfile else "sls.rst_t"
 
         template_obj = jinja_env.get_template(template)
 
-        logger.debug("[AutoSaltSLS] Rendering file '{0}' for {1} using '{2}'".format(
-            output_file,
-            self.name,
-            template_obj.filename,
-        ))
+        logger.debug(
+            "[AutoSaltSLS] Rendering file '{0}' for {1} using '{2}'".format(
+                output_file, self.name, template_obj.filename,
+            )
+        )
 
         # Render the template using Jinja
-        with open(output_file, 'w') as outfile:
+        with open(output_file, "w") as outfile:
             outfile.write(template_obj.render(sls=self))
 
     def parse_file(self):
@@ -273,7 +271,7 @@ class AutoSaltSLS(object):
                         continue
 
                     # Remove the newline
-                    line = line.strip('\n')
+                    line = line.strip("\n")
 
                     # Start a block and create an AutoSaltSLSEntry object when we get the doc prefix (e.g. '###')
                     if line.startswith(self.doc_prefix):
@@ -286,17 +284,21 @@ class AutoSaltSLS(object):
                         entry = AutoSaltSLSEntry()
 
                         # Strip off the prefix
-                        line = line.replace(self.doc_prefix, '')
+                        line = line.replace(self.doc_prefix, "")
 
                         # Check for directive keywords, stripping spaces from the fields
                         if line and not line.isspace():
-                            directives = [x.strip() for x in line.split(',')]
+                            directives = [x.strip() for x in line.split(",")]
 
                             # Process directives
                             for directive in directives:
                                 # 'topfile' is an sls directive
-                                if directive == 'topfile':
-                                    logger.debug('[AutoSaltSLS] Marking sls {0} as top file'.format(self.basename))
+                                if directive == "topfile":
+                                    logger.debug(
+                                        "[AutoSaltSLS] Marking sls {0} as top file".format(
+                                            self.basename
+                                        )
+                                    )
                                     self.topfile = True
 
                                 # Everything else is for an entry
@@ -308,32 +310,34 @@ class AutoSaltSLS(object):
                     if entry and not line.startswith(self.comment_prefix):
                         # Capture the first line (YAML ID) as content
                         if entry.show_id or entry.summary_id or entry.step_id:
-                            if line[-1] == ':':
+                            if line[-1] == ":":
                                 line = line[:-1]
 
                             if entry.summary_id or entry.step_id:
                                 # Prepend with a newline so the summary is correctly identified later
-                                entry.prepend_line('')
+                                entry.prepend_line("")
                                 entry.prepend_line(line)
                             else:
                                 entry.append_line(line)
 
                         # Read all the include entries (flag set by directive above)
                         elif entry.include:
-                            if 'include:' in line:
+                            if "include:" in line:
                                 included = True
                                 continue
                             elif included and line and not line.isspace():
                                 # Use regex to match an include entry and store it
                                 # First non-match will trigger block end
-                                match = re.search('^\s+-\s+([\w\-.]+)', line)
+                                match = re.search("^\s+-\s+([\w\-.]+)", line)
                                 if match:
                                     text = match.group(1)
 
-                                    if text.startswith('.'):
-                                        text = '{0} <{1}{2}>'.format(
+                                    if text.startswith("."):
+                                        text = "{0} <{1}{2}>".format(
                                             text,
-                                            self.parent_name if self.parent_name else self.name,
+                                            self.parent_name
+                                            if self.parent_name
+                                            else self.name,
                                             text,
                                         )
 
@@ -347,7 +351,7 @@ class AutoSaltSLS(object):
 
                     # Any other comment line within an active block is part of the entry
                     if entry and line.startswith(self.comment_prefix):
-                        line = line.replace(self.comment_prefix, '')
+                        line = line.replace(self.comment_prefix, "")
 
                         if self.app.config.autosaltsls_remove_first_space:
                             line = line[1:]
@@ -362,18 +366,16 @@ class AutoSaltSLS(object):
         """
         Shortcut function to set all the attributes needed for this object to be an init file.
         """
-        self.filename = 'init.sls'
-        self.rst_filename = rst_filename if rst_filename else 'init.rst'
+        self.filename = "init.sls"
+        self.rst_filename = rst_filename if rst_filename else "init.rst"
 
         self.full_filename = os.path.join(
-            self.source_path,
-            self.basename.replace('.', os.sep),
-            self.filename,
+            self.source_path, self.basename.replace(".", os.sep), self.filename,
         )
         self.initfile = True
 
         if self.source_url_root:
-            self.source_url = self.source_url_root + '/' + self.filename
+            self.source_url = self.source_url_root + "/" + self.filename
 
     @property
     def text(self):
@@ -383,9 +385,9 @@ class AutoSaltSLS(object):
         :return: str
         """
         if self.entries:
-            return '\n\n'.join([x.text for x in self.entries])
+            return "\n\n".join([x.text for x in self.entries])
 
-        return ''
+        return ""
 
     @property
     def toc_entry(self):
@@ -394,17 +396,15 @@ class AutoSaltSLS(object):
 
         :return: str
         """
-        toc_entry = self.basename.replace('.', '/')
+        toc_entry = self.basename.replace(".", "/")
 
         if self.children:
-            toc_entry = '{0}/{1}'.format(toc_entry, 'main')
+            toc_entry = "{0}/{1}".format(toc_entry, "main")
 
         return toc_entry
 
     def write_rst_files(
-            self,
-            jinja_env,
-            build_root_dir,
+        self, jinja_env, build_root_dir,
     ):
         """
         Write the rst files for this object and all children.
@@ -422,18 +422,26 @@ class AutoSaltSLS(object):
 
         if self.children:
             # Create the parent dir
-            output_dir = os.path.join(build_root_dir, self.basename.replace('.', os.path.sep))
+            output_dir = os.path.join(
+                build_root_dir, self.basename.replace(".", os.path.sep)
+            )
 
             if not os.path.exists(output_dir):
-                logger.debug("[AutoSaltSLS] Creating build dir '{0}'".format(output_dir))
+                logger.debug(
+                    "[AutoSaltSLS] Creating build dir '{0}'".format(output_dir)
+                )
 
                 try:
                     os.mkdir(output_dir)
                 except PermissionError:
-                    raise ExtensionError("Could not create '{0}', permission denied".format(output_dir))
+                    raise ExtensionError(
+                        "Could not create '{0}', permission denied".format(output_dir)
+                    )
 
             # Generate the main index
-            self.output_rst(jinja_env, output_dir, filename='main.rst', template='main.rst_t')
+            self.output_rst(
+                jinja_env, output_dir, filename="main.rst", template="main.rst_t"
+            )
             file_count += 1
 
             # Write out our init base file
@@ -456,12 +464,12 @@ class AutoSaltSLS(object):
     @staticmethod
     def _parse_name(basename):
         # Replace the path separator with a dot
-        basename = basename.replace(os.path.sep, '.')
+        basename = basename.replace(os.path.sep, ".")
 
-        if basename.endswith('.sls'):
-            return basename.replace('.sls', ''), basename
+        if basename.endswith(".sls"):
+            return basename.replace(".sls", ""), basename
 
-        return basename, ''
+        return basename, ""
 
 
 class AutoSaltSLSEntry(object):
@@ -494,6 +502,7 @@ class AutoSaltSLSEntry(object):
         summary_id
              Read the first line following this comment block and add it as the entry summary
     """
+
     def __init__(self, text=None):
         self.lines = []
         self.includes = []
@@ -532,15 +541,15 @@ class AutoSaltSLSEntry(object):
 
         :return: str
         """
-        output = '========================================\n'
-        output += 'Summary:\n'
-        output += self.summary + '\n'
-        output += '========================================\n'
+        output = "========================================\n"
+        output += "Summary:\n"
+        output += self.summary + "\n"
+        output += "========================================\n"
 
         if self.content:
-            output += 'Content:\n'
-            output += self.content + '\n'
-            output += '========================================\n'
+            output += "Content:\n"
+            output += self.content + "\n"
+            output += "========================================\n"
 
         return output
 
@@ -617,7 +626,7 @@ class AutoSaltSLSEntry(object):
 
         :return: str
         """
-        return '\n'.join(self.lines)
+        return "\n".join(self.lines)
 
     #
     # Private Functions
@@ -633,23 +642,23 @@ class AutoSaltSLSEntry(object):
         self._summary = None
 
         if self.lines:
-            self._content = ''
+            self._content = ""
 
             for line in self.lines:
                 if self._summary is None:
                     # Got the first blank line
-                    if line == '' or line.isspace():
-                        self._summary = '\n'.join(summary)
+                    if line == "" or line.isspace():
+                        self._summary = "\n".join(summary)
                         continue
                     summary.append(line)
                 else:
                     content.append(line)
 
             if summary and self._summary is None:
-                self._summary = '\n'.join(summary)
+                self._summary = "\n".join(summary)
 
             if content:
-                self._content = '\n'.join(content)
+                self._content = "\n".join(content)
         else:
-            self._summary = ''
-            self._content = ''
+            self._summary = ""
+            self._content = ""
