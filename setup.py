@@ -13,7 +13,7 @@ setup(
     description='Sphinx auto-document generator for SaltStack sls files',
     long_description=README,
     long_description_content_type='text/x-rst',
-    url='https://bitbucket.tools.ficoccs-dev.net/projects/DEVOPS/repos/ccs-standard-templates/browse',
+    url='https://github.com/Tanoti/sphinxcontrib-autosaltsls',
     author='John Hicks',
     author_email='john.p.hicks@gmail.com',
     classifiers=[
