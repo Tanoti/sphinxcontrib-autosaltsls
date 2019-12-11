@@ -6,7 +6,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 
 setup(
     name='sphinxcontrib-autosaltsls',
-    version='0.2.6',
+    version='0.2.7',
     packages=['sphinxcontrib.autosaltsls'],
     include_package_data=True,
     license='Apache 2',
