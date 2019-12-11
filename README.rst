@@ -8,7 +8,7 @@ Sphinx AutoSaltSLS
     :target: https://travis-ci.com/Tanoti/sphinxcontrib-autosaltsls
 
 .. image:: https://readthedocs.org/projects/sphinxcontrib-autosaltsls/badge/?version=latest
-    :target: https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/?badge=latest
+    :target: https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/readme.html?badge=latest
     :alt: Documentation Status
 
 .. image:: https://pyup.io/repos/github/Tanoti/sphinxcontrib-autosaltsls/shield.svg
@@ -60,4 +60,4 @@ Next, add and configure AutoSaltSLS in your Sphinx project's ``conf.py``.
 The documentation will be built into the location specified by ``autosaltsls_build_root`` (defaults to '.')
 
 To configure AutoAPI behaviour further, see the
-`Configuration documentation <https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/>`_.
+`Configuration documentation <https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/configuration.html>`_.
