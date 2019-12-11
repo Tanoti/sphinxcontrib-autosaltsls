@@ -61,3 +61,13 @@ The documentation will be built into the location specified by ``autosaltsls_bui
 
 To configure AutoAPI behaviour further, see the
 `Configuration documentation <https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/configuration.html>`_.
+
+To Do
+======
+* Write proper tests
+
+Credits
+========
+This project was based on the logic behind both `readthedocs/sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_
+and `Jakski/sphinxcontrib-autoyaml <https://github.com/Jakski/sphinxcontrib-autoyaml>`_, so many thanks to those projects
+for getting me started.
