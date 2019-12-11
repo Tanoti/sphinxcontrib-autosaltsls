@@ -1,8 +1,13 @@
 language: python
 python:
   - "3.7"
-#  - "3.6"
-#  - "3.5"
 install: pip install -r requirements-dev.txt
 script:
   - pytest
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: Tanoti
+  secure: "DEeuqfKyLITN0+3PaETez+X908XEncaSWMYw+lUMC0sUMmS5t7oqUtfYrPkh+lYgCcsBQ8vwZZ+uSfcisHu4ZxHW/B9rUBMsguiPWxfLM7Q6j7raaNwXjdmTdx3CKNnYjax6cw0KAZSjYe0zkJqHYKcQNpdp+hYP4e8ZqtDr0XFR0LvLEDNBTjp1wOH41a7/lcIM3JEQeHwO/EY4nQDrYvzMy7M0u/kJCHid8jZzQhUqkijJTgcZRwXYllKpL7xV6etylgNLfMw4sparXE+9eY9wrAF0yoOAiw3OchsBz1TaC5VbgJkJT7S7C6wbrX0tcrNjMqqJeQ8t1lgCOIA5Rqf6X0lFc0tNnLiaepAGQyaO6MrQ5sdm/R28VuWXwyNbeiNPGs4elkdjqyulSUhU4wO62xqpJo1nqVk5wLxsJhjcsPyndQBMiYX+G3QYCxlxSA5RABQY9DdbtJt/VUOnuZT/CBz3UYzfxuaMQ/fwklLnVN75FqDc/4Pi0d3BGAfwHlNIfEI9/PqsSBToJtCoMaI8iDpSgBCeOfr9RfIheXTWaNcNcZ1d3dxxffGb7Sq9Q+67mUpR6F0UdAySqOiS+PZKi0aQxRTKA5chpI8YFeRVXFn007Y6LkTPp0DTXXgRnUkuuI4bhv9+7fyk9TRLTMkD6jIDTiDfCha7bi0zCQM="
+  on:
+    tags: true
