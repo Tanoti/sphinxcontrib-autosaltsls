@@ -1,6 +1,21 @@
 Sphinx AutoSaltSLS
 *******************
 
+
+
+.. image:: https://travis-ci.com/Tanoti/sphinxcontrib-autosaltsls.svg?branch=master
+    :target: https://travis-ci.com/Tanoti/sphinxcontrib-autosaltsls
+
+
+
+.. image:: https://pyup.io/repos/github/Tanoti/sphinxcontrib-autosaltsls/shield.svg
+    :target: https://pyup.io/repos/github/Tanoti/sphinxcontrib-autosaltsls/
+    :alt: Updates
+
+.. image:: https://pyup.io/repos/github/Tanoti/sphinxcontrib-autosaltsls/python-3-shield.svg
+    :target: https://pyup.io/repos/github/Tanoti/sphinxcontrib-autosaltsls/
+    :alt: Python 3
+
 Sphinx AutoSaltSLS provides a way to automatically document Salt .sls files (e.g. states, pillar, reactors, etc) using
 simple directives in the comments blocks of those files.
 
