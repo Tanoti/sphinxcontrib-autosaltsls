@@ -2,12 +2,14 @@ Sphinx AutoSaltSLS
 *******************
 
 .. image:: https://img.shields.io/pypi/v/sphinxcontrib-autosaltsls.svg
-        :target: https://pypi.python.org/pypi/sphinxcontrib-autosaltsls
+    :target: https://pypi.python.org/pypi/sphinxcontrib-autosaltsls
 
 .. image:: https://travis-ci.com/Tanoti/sphinxcontrib-autosaltsls.svg?branch=master
     :target: https://travis-ci.com/Tanoti/sphinxcontrib-autosaltsls
 
-
+.. image:: https://readthedocs.org/projects/sphinxcontrib-autosaltsls/badge/?version=latest
+    :target: https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://pyup.io/repos/github/Tanoti/sphinxcontrib-autosaltsls/shield.svg
     :target: https://pyup.io/repos/github/Tanoti/sphinxcontrib-autosaltsls/
