@@ -19,6 +19,9 @@ Sphinx AutoSaltSLS
     :target: https://pyup.io/repos/github/Tanoti/sphinxcontrib-autosaltsls/
     :alt: Python 3
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+
 Sphinx AutoSaltSLS provides a way to automatically document Salt .sls files (e.g. states, pillar, reactors, etc) using
 simple directives in the comments blocks of those files.
 
