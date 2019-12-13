@@ -64,7 +64,7 @@ To configure AutoAPI behaviour further, see the
 
 Basic Setup
 ------------
-The absolute minimum setup is to point :confval:`autosaltsls_sources` at the parent location of your sls files (e.g.
+The absolute minimum setup is to point ``autosaltsls_sources`` at the parent location of your sls files (e.g.
 ``/srv/salt``) and let the extension index the files it finds. Documentation pages will be created but, unless the sls
 files have had their document comment blocks enabled, they will say "No content".
 
