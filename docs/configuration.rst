@@ -1,8 +1,12 @@
 Configuration
 ===============
 
+This extension has two types of configuration options - top-level ones that control how the extension itself works and
+source-specific ones that control how the sls files in a given source location should be processed.
+
 Configuration Options
 ----------------------
+These options should be set in the Sphinx ``conf.py`` file in your documentation area.
 
 .. confval:: autosaltsls_sources
 
@@ -139,8 +143,8 @@ The way in which the .sls files under a source location are parsed can be contro
 
     Prefix to add to the base sls name when rendering rst file contents.
 
-Example
-~~~~~~~~
+Source Settings Example
+~~~~~~~~~~~~~~~~~~~~~~~~
 The following is a commented example of a source dict:
 
 .. code-block:: python

@@ -62,6 +62,19 @@ The documentation will be built into the location specified by ``autosaltsls_bui
 To configure AutoAPI behaviour further, see the
 `Configuration documentation <https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/configuration.html>`_.
 
+Basic Setup
+------------
+The absolute minimum setup is to point :confval:`autosaltsls_sources` at the parent location of your sls files (e.g.
+``/srv/salt``) and let the extension index the files it finds. Documentation pages will be created but, unless the sls
+files have had their document comment blocks enabled, they will say "No content".
+
+.. code-block:: python
+
+    autosaltsls_sources = '/srv/salt'
+
+See `Comment Block Format <https://sphinxcontrib-autosaltsls.readthedocs.io/en/latest/document.html>`_ for more
+information on how to enable these.
+
 To Do
 ======
 * Write proper tests

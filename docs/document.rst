@@ -61,6 +61,12 @@ start prefix (multiple directives can be supplied by separating them with commas
     Read the first line following this comment block and add it as summary, then add the entry to the numbered list
     of steps
 
+Cross-referencing SLS files
+----------------------------
+The AutoSaltSLS extension makes use of a custom Sphinx role ``sls`` to create cross-references between sls files. This
+is how the :confval:`include` directive can build the list included files and have them link to their target. You can
+use the ``sls`` role to insert your own cross-references between sls files.
+
 Configuration Example
 ----------------------
 The following is a contrived comment block::
@@ -69,7 +75,7 @@ The following is a contrived comment block::
     # This line is the header summary
     #
     # Text following a blank line will be the content.
-    #
+    # This will be rendered as a cross-reference - :sls:`targetsls`
 
     ###
     # Any subsequent comment blocks are the body with a summary...
