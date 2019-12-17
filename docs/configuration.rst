@@ -13,21 +13,15 @@ These options should be set in the Sphinx ``conf.py`` file in your documentation
         **Required**
 
         The source areas in the Salt master's fileset (e.g. states, pillar, etc) to be documented. This can be provided
-        in one of three ways:
+        in one of two ways:
 
-        1. As a single string if all files beneath a location are to be parsed:
-
-            .. code-block:: python
-
-                autosaltsls_sources = '/srv/salt'
-
-        2. As a list of paths if you want to accept all the default source settings:
+        1. As a list of paths if you want to accept all the default source settings:
 
             .. code-block:: python
 
                 autosaltsls_sources = ['states', 'pillar']
 
-        3.  As a dict of source location to its settings (see :ref:`Source Settings`):
+        2.  As a dict of source location to its settings (see :ref:`Source Settings`):
 
             .. code-block:: python
 

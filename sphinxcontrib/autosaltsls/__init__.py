@@ -38,8 +38,6 @@ def run_autosaltsls(app):
     # Convert str or list into dict
     if isinstance(app.config.autosaltsls_sources, dict):
         sources = app.config.autosaltsls_sources
-    elif isinstance(app.config.autosaltsls_sources, str):
-        sources[app.config.autosaltsls_sources] = {}
     elif isinstance(app.config.autosaltsls_sources, list):
         for source in app.config.autosaltsls_sources:
             sources[source] = {}
