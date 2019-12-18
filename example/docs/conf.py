@@ -64,9 +64,11 @@ autosaltsls_sources = {
             'roles',
         ],
         'template_path': '_templates/states',
+        'title_suffix': ' (state)'
     },
     'pillar': {
         'title': 'Pillar',
+        'title_suffix': ' (pillar)'
     },
     'reactor': {
         'title': 'Reactors',
@@ -76,6 +78,7 @@ autosaltsls_sources = {
         'url_root': 'states/roles',
         'build_dir': 'roles',
         'prefix': 'roles.',
+        'title_prefix': 'Roles-',
     },
 }
 

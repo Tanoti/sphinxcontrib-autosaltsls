@@ -19,6 +19,8 @@ SETTINGS_STRING = [
     "build_dir",
     "url_root",
     "prefix",
+    "title_prefix",
+    "title_suffix",
 ]
 
 logger = logging.getLogger(__name__)

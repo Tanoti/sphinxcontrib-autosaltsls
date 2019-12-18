@@ -2,8 +2,8 @@
 :orphan:
 {%- endif %}
 
-``{{ sls.basename }}``
-************{{ "*" * sls.basename|length }}
+``{{ sls.title }}``
+************{{ "*" * sls.title|length }}
 
 .. sls:: {{ sls.name }}
 

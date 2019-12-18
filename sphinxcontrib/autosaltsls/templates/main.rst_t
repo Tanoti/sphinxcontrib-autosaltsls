@@ -1,5 +1,5 @@
-``{{ sls.basename }}``
-*******{{ "*" * sls.name|length }}
+``{{ sls.title }}``
+*******{{ "*" * sls.title|length }}
 
 .. sls:: {{ sls.name }}
 
@@ -28,12 +28,12 @@ Elements
     :depth: 1
     :local:
 
-{%- for child_sls in sls.children %}
-{%- if not child_sls.initfile and child_sls.docname %}
+{%-   for child_sls in sls.children %}
+{%-     if not child_sls.initfile and child_sls.docname %}
 
-:doc:`{{ child_sls.docname }}`
--------{{ "-" * child_sls.docname|length }}
+:doc:`{{ child_sls.basename }} <{{ child_sls.docname }}>`
+--------------{{ "-" * (child_sls.basename|length + child_sls.docname|length) }}
 {{ child_sls.header.summary }}
-{%- endif %}
-{%- endfor %}
+{%-     endif %}
+{%-   endfor %}
 {%- endif %}
