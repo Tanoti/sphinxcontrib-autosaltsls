@@ -66,8 +66,8 @@ class AutoSaltSLS(object):
         no_first_space=True,
         source_url_root=None,
         prefix=None,
-        title_prefix='',
-        title_suffix='',
+        title_prefix="",
+        title_suffix="",
     ):
         self.app = app
         self.basename, self.filename = self._parse_name(basename)
@@ -390,7 +390,9 @@ class AutoSaltSLS(object):
     @property
     def title(self):
         if self.title_suffix or self.title_prefix:
-            return "{0}{1}{2}".format(self.title_prefix, self.basename, self.title_suffix)
+            return "{0}{1}{2}".format(
+                self.title_prefix, self.basename, self.title_suffix
+            )
         return self.basename
 
     @property
