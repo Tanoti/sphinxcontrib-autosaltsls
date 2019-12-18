@@ -11,6 +11,7 @@ Welcome to Sphinx AutoSaltSLS's documentation!
     templates
     example
     autosaltsls
+    history
 
 Indices and tables
 ==================
