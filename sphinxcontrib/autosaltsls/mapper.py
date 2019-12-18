@@ -45,6 +45,8 @@ class AutoSaltSLSMapper(object):
         self.url_root = settings.get("url_root", None)
         self.title = settings.get("title", source)
         self.prefix = settings.get("prefix", None)
+        self.title_prefix = settings.get("title_prefix", "")
+        self.title_suffix = settings.get("title_suffix", "")
 
         # Expand the source to a full dir
         if not os.path.isabs(self.source):
@@ -207,10 +209,8 @@ class AutoSaltSLSMapper(object):
         # Clear out any old data
         self.sls_objects = []
 
-        # rep_path_idx = self.source.count(os.path.sep) + 1
-
         for dir_path, dir_names, filenames in os.walk("."):
-            # logger.debug('JPH - {0}, {1}, {2}, {3}'.format(dir_path, dir_names, filenames, rep_path_idx))
+            # logger.debug('JPH - {0}, {1}, {2}'.format(dir_path, dir_names, filenames))
             # Remove the source from the dir we are processing as this will give us the sls namespace
             p = pathlib.Path(dir_path)
             rel_path = dir_path
@@ -248,6 +248,8 @@ class AutoSaltSLSMapper(object):
                     no_first_space=self.settings.get("no_first_space"),
                     source_url_root=source_url_path,
                     prefix=self.prefix,
+                    title_prefix=self.title_prefix,
+                    title_suffix=self.title_suffix,
                 )
                 self.sls_objects.append(sls_parent)
 
@@ -275,6 +277,8 @@ class AutoSaltSLSMapper(object):
                         no_first_space=self.settings.get("no_first_space"),
                         source_url_root=source_url_path,
                         prefix=self.prefix,
+                        title_prefix=self.title_prefix,
+                        title_suffix=self.title_suffix,
                     )
 
                     if sls_parent:

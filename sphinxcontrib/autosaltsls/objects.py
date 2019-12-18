@@ -46,6 +46,12 @@ class AutoSaltSLS(object):
 
     prefix: None
         Prefix to add to the base sls name when rendering rst file contents
+
+    title_prefix: ''
+        Prefix to add to the title when rendering the rst file
+
+    title_suffix: ''
+        Suffix to append to the title when rendering the rst file
     """
 
     def __init__(
@@ -60,6 +66,8 @@ class AutoSaltSLS(object):
         no_first_space=True,
         source_url_root=None,
         prefix=None,
+        title_prefix="",
+        title_suffix="",
     ):
         self.app = app
         self.basename, self.filename = self._parse_name(basename)
@@ -69,6 +77,8 @@ class AutoSaltSLS(object):
         self.no_first_space = False if no_first_space is False else True
         self.full_filename = None
         self.prefix = prefix
+        self.title_prefix = title_prefix
+        self.title_suffix = title_suffix
 
         # Build the full filename
         if self.filename:
@@ -376,6 +386,14 @@ class AutoSaltSLS(object):
 
         if self.source_url_root:
             self.source_url = self.source_url_root + "/" + self.filename
+
+    @property
+    def title(self):
+        if self.title_suffix or self.title_prefix:
+            return "{0}{1}{2}".format(
+                self.title_prefix, self.basename, self.title_suffix
+            )
+        return self.basename
 
     @property
     def text(self):

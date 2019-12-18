@@ -1,5 +1,5 @@
-``apache``
-*************
+``apache (state)``
+*********************
 
 .. sls:: apache
 
@@ -15,10 +15,10 @@ Elements
     :depth: 1
     :local:
 
-:doc:`installed`
-----------------
+:doc:`installed <installed>`
+--------------------------------
 Ensure the Apache instance is installed
 
-:doc:`running`
---------------
+:doc:`running <running>`
+----------------------------
 Ensure the Apache instance is running

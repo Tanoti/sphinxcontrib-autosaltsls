@@ -137,6 +137,20 @@ The way in which the .sls files under a source location are parsed can be contro
 
     Prefix to add to the base sls name when rendering rst file contents.
 
+.. confval:: title_prefix
+
+    Default: ``''``
+
+    Prefix to add to the document title. This may be needed to ensure title uniqueness when using extensions like
+    ``confluencebuilder``.
+
+.. confval:: title_suffix
+
+    Default: ``''``
+
+    Suffix to append to the document title. This may be needed to ensure title uniqueness when using extensions like
+    ``confluencebuilder``.
+
 Source Settings Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 The following is a commented example of a source dict:

@@ -1,7 +1,7 @@
 :orphan:
 
-``running``
-*******************
+``running (state)``
+***************************
 
 .. sls:: apache.running
 
