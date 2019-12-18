@@ -1,7 +1,7 @@
 :orphan:
 
-``kernel_settings_made``
-********************************
+``kernel_settings_made (state)``
+****************************************
 
 .. sls:: kickstart.kernel_settings_made
 

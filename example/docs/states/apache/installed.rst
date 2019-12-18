@@ -1,7 +1,7 @@
 :orphan:
 
-``installed``
-*********************
+``installed (state)``
+*****************************
 
 .. sls:: apache.installed
 

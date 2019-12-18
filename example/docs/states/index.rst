@@ -21,8 +21,8 @@ Top Files
     :maxdepth: 1
 
 
-    kickstarting
-    top
+    kickstarting.sls <kickstarting>
+    top.sls <top>
 
 
 Other Files
@@ -31,6 +31,6 @@ Other Files
     :maxdepth: 1
 
 
-    apache/main
-    kickstart/main
-    nrpe
+    apache  <apache/main>
+    kickstart  <kickstart/main>
+    nrpe  <nrpe>

@@ -20,5 +20,5 @@ Entries
     :maxdepth: 1
 
 {% for sls_obj in obj.other_files %}
-    {{ sls_obj.toc_entry }}
+    {{ sls_obj.basename }} <{{ sls_obj.toc_entry }}>
 {%- endfor %}
