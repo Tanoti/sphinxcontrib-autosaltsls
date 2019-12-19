@@ -1,6 +1,6 @@
 :orphan:
 
-``apache (state)``
+``apache (state) [init]``
 **************************
 
 .. sls:: apache
@@ -14,3 +14,5 @@ Includes
 
     * :sls:`.installed <apache.installed>`
     * :sls:`.running <apache.running>`
+
+:doc:`[main] <main>`

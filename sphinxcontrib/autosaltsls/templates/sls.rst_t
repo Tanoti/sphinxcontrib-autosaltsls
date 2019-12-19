@@ -2,10 +2,10 @@
 :orphan:
 {%- endif %}
 
-``{{ sls.title }}``
+``{{ sls.title }}{{ ' [init]' if sls.initfile else '' }}``
 ************{{ "*" * sls.title|length }}
 
-.. sls:: {{ sls.name }}
+.. sls:: {{ sls.prefixed_name }}
 
 {%- if not sls.entries %}
 
@@ -64,4 +64,7 @@ Steps
 {%- endif %}
 {%- if sls.parent_name %}
 :doc:`[{{ sls.parent_name}} (main)] <main>`
+{%- endif %}
+{%- if sls.initfile and sls.child_count %}
+:doc:`[main] <main>`
 {%- endif %}

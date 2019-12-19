@@ -1,7 +1,7 @@
 ``{{ sls.title }}``
 *******{{ "*" * sls.title|length }}
 
-.. sls:: {{ sls.name }}
+.. sls:: {{ sls.prefixed_name }}
 
 {%- if not sls.entries %}
 
@@ -13,11 +13,11 @@
 
 {{ sls.header.content }}
 {%-   endif %}
+{%- endif %}
 
-{%-   if sls.initfile %}
+{%- if sls.initfile %}
 
 :doc:`[more] <init>`
-{%-   endif %}
 {%- endif %}
 
 {%- if sls.child_count %}

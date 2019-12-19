@@ -40,13 +40,14 @@ class AutoSaltSLSMapper(object):
         self._sub_object_count = None
 
         # Parse some settings into attributes
-        self.exclude = settings.get("exclude", [])
         self.build_dir = settings.get("build_dir", None)
-        self.url_root = settings.get("url_root", None)
-        self.title = settings.get("title", source)
+        self.exclude = settings.get("exclude", [])
+        self.expand_title_name = settings.get("expand_title_name", None)
         self.prefix = settings.get("prefix", None)
+        self.title = settings.get("title", source)
         self.title_prefix = settings.get("title_prefix", "")
         self.title_suffix = settings.get("title_suffix", "")
+        self.url_root = settings.get("url_root", None)
 
         # Expand the source to a full dir
         if not os.path.isabs(self.source):
@@ -250,6 +251,7 @@ class AutoSaltSLSMapper(object):
                     prefix=self.prefix,
                     title_prefix=self.title_prefix,
                     title_suffix=self.title_suffix,
+                    expand_title_name=self.expand_title_name,
                 )
                 self.sls_objects.append(sls_parent)
 
@@ -279,6 +281,7 @@ class AutoSaltSLSMapper(object):
                         prefix=self.prefix,
                         title_prefix=self.title_prefix,
                         title_suffix=self.title_suffix,
+                        expand_title_name=self.expand_title_name,
                     )
 
                     if sls_parent:

@@ -59,13 +59,14 @@ class AutoSaltSLS(object):
         app,
         basename,
         source_path,
-        parent_name=None,
-        doc_prefix=None,
         comment_prefix=None,
         comment_ignore_prefix=None,
+        expand_title_name=None,
+        doc_prefix=None,
         no_first_space=True,
-        source_url_root=None,
+        parent_name=None,
         prefix=None,
+        source_url_root=None,
         title_prefix="",
         title_suffix="",
     ):
@@ -76,6 +77,7 @@ class AutoSaltSLS(object):
         self.no_first_space = False if no_first_space is False else True
         self.no_first_space = False if no_first_space is False else True
         self.full_filename = None
+        self.expand_title_name = expand_title_name
         self.prefix = prefix
         self.title_prefix = title_prefix
         self.title_suffix = title_suffix
@@ -216,14 +218,10 @@ class AutoSaltSLS(object):
 
         :return: str
         """
-        name = self.basename
-
         if self.parent_name:
-            name = "{0}.{1}".format(self.parent_name, self.basename)
-        elif self.prefix:
-            name = self.prefix + name
+            return "{0}.{1}".format(self.parent_name, self.basename)
 
-        return name
+        return self.basename
 
     def output_rst(
         self, jinja_env, output_dir, filename=None, template=None,
@@ -372,6 +370,19 @@ class AutoSaltSLS(object):
             if entry:
                 self.add_entry(entry)
 
+    @property
+    def prefixed_name(self):
+        """
+        Return the full dot-separated name of the sls object (e.g. apache.sls_configured) with the source-specific
+        prefix applied.
+
+        :return: str
+        """
+        if self.prefix:
+            return self.prefix + self.name
+
+        return self.name
+
     def set_initfile(self, rst_filename=None):
         """
         Shortcut function to set all the attributes needed for this object to be an init file.
@@ -388,14 +399,6 @@ class AutoSaltSLS(object):
             self.source_url = self.source_url_root + "/" + self.filename
 
     @property
-    def title(self):
-        if self.title_suffix or self.title_prefix:
-            return "{0}{1}{2}".format(
-                self.title_prefix, self.basename, self.title_suffix
-            )
-        return self.basename
-
-    @property
     def text(self):
         """
         Return all the entries including the header as a string with newline terminators.
@@ -406,6 +409,20 @@ class AutoSaltSLS(object):
             return "\n\n".join([x.text for x in self.entries])
 
         return ""
+
+    @property
+    def title(self):
+        if self.topfile:
+            title = self.filename
+        elif self.expand_title_name:
+            title = self.name
+        else:
+            title = self.basename
+
+        if self.title_suffix or self.title_prefix:
+            title = "{0}{1}{2}".format(self.title_prefix, title, self.title_suffix)
+
+        return title
 
     @property
     def toc_entry(self):

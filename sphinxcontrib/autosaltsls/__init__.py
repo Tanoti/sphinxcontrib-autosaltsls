@@ -14,13 +14,13 @@ __email__ = "johnhicks@fico.com"
 __version__ = "0.2.11"
 
 SETTINGS_STRING = [
-    "title",
-    "template_path",
     "build_dir",
-    "url_root",
     "prefix",
+    "template_path",
+    "title",
     "title_prefix",
     "title_suffix",
+    "url_root",
 ]
 
 logger = logging.getLogger(__name__)
@@ -49,14 +49,23 @@ def run_autosaltsls(app):
         if not isinstance(settings, dict):
             raise ExtensionError(
                 "Settings for '{0}' in autosaltsls_sources must be a dict".format(
-                    source
+                    source,
                 )
             )
 
         if "exclude" in settings and not isinstance(settings["exclude"], list):
             raise ExtensionError(
                 "Entry 'exclude' for '{0}' in autosaltsls_sources setting must be a list".format(
-                    source
+                    source,
+                )
+            )
+
+        if "expand_title_name" in settings and not isinstance(
+            settings["expand_title_name"], bool
+        ):
+            raise ExtensionError(
+                "Entry 'expand_title_name' for '{0}' in autosaltsls_sources setting must be a bool".format(
+                    source,
                 )
             )
 

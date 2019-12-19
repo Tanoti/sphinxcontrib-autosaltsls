@@ -60,6 +60,7 @@ html_static_path = ['_static']
 autosaltsls_sources = {
     'states': {
         'title': 'States',
+        'expand_title_name': True,
         'exclude': [
             'roles',
         ],
