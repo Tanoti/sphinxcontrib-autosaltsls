@@ -8,9 +8,9 @@ Configuration Options
 ----------------------
 These options should be set in the Sphinx ``conf.py`` file in your documentation area.
 
+Required
+~~~~~~~~
 .. confval:: autosaltsls_sources
-
-        **Required**
 
         The source areas in the Salt master's fileset (e.g. states, pillar, etc) to be documented. This can be provided
         in one of two ways:
@@ -38,6 +38,14 @@ These options should be set in the Sphinx ``conf.py`` file in your documentation
                     },
                 }
 
+Optional
+~~~~~~~~
+.. confval:: autosaltsls_build_root
+
+    Default: ``.``
+
+    Location where the generated .rst files will saved
+
 .. confval:: autosaltsls_sources_root
 
     Default: ``..``
@@ -45,17 +53,11 @@ These options should be set in the Sphinx ``conf.py`` file in your documentation
     The directory under which the ``autosaltsls_sources`` are located. If you place your Sphinx project alongside the
     sources then this can be omitted, otherwise provide the path (e.g. ``/srv/salt``).
 
-.. confval:: autosaltsls_build_root
+.. confval:: autosaltsls_comment_ignore_prefix
 
-    Default: ``.``
+    Default: ``#!``
 
-    Location where the generated .rst files will saved
-
-.. confval:: autosaltsls_doc_prefix
-
-    Default: ``###``
-
-    String used to denote the start of a document comment block.
+    Character/string used to denote lines which should be ignored when parsing a document comment block.
 
 .. confval:: autosaltsls_comment_prefix
 
@@ -63,11 +65,18 @@ These options should be set in the Sphinx ``conf.py`` file in your documentation
 
     Character/string used to denote the contents of a document comment block.
 
-.. confval:: autosaltsls_comment_ignore_prefix
+.. confval:: autosaltsls_doc_prefix
 
-    Default: ``#!``
+    Default: ``###``
 
-    Character/string used to denote lines which should be ignored when parsing a document comment block.
+    String used to denote the start of a document comment block.
+
+.. confval:: autosaltsls_index_template_path
+
+    Default: ``''``
+
+    Location of an override ``master.rst_t`` file to be used when generating the top-level index file
+    (See  :ref:`Templates`).
 
 .. confval:: autosaltsls_remove_first_space
 
@@ -93,23 +102,16 @@ These options should be set in the Sphinx ``conf.py`` file in your documentation
 
     Generate a top-level ``index.rst`` file which has a toctree that references the source-level index files.
 
-.. confval:: autosaltsls_index_template_path
-
-    Default: ``''``
-
-    Location of an override ``master.rst_t`` file to be used when generating the top-level index file
-    (See  :ref:`Templates`).
-
 Source Settings
 ----------------
 The way in which the .sls files under a source location are parsed can be controlled using the following settings when
-`autosaltsls_sources` is supplied as a dict:
+:confval:`autosaltsls_sources` is supplied as a dict:
 
-.. confval:: title
+.. confval:: build_dir
 
-    Default: ``<source key>``
+    Default: ``<autosaltsls_build_root>/<source>``.
 
-    The title to use on the index.rst page.
+    Path to put the built .rst files.
 
 .. confval:: exclude
 
@@ -118,6 +120,19 @@ The way in which the .sls files under a source location are parsed can be contro
     A list of paths relative to the source location to exclude from parsing. This can be useful where a sub-directory
     of states need to be documented as their own source and corresponding top-level index entry.
 
+.. confval:: expand_title_name
+
+    Default: ``False``
+
+    Flag to expand the sls name in the document page title. For example ``apache/installed.sls`` would render as
+    ``apache.installed`` rather than ``installed``.
+
+.. confval:: prefix
+
+    Default: ``''``
+
+    Prefix to add to the base sls name when rendering rst file contents.
+
 .. confval:: template_path
 
     Default: ``None``
@@ -125,17 +140,11 @@ The way in which the .sls files under a source location are parsed can be contro
     The location of the template files for this source (index.rst_t, main.rst_t, sls.rst_t, top.rst_t). This is deemed
     to be relative to the Sphinx config path unless provided as an absolute path. (See :ref:`Templates`).
 
-.. confval:: build_dir
+.. confval:: title
 
-    Default: ``<autosaltsls_build_root>/<source>``.
+    Default: ``<source key>``
 
-    Path to put the built .rst files.
-
-.. confval:: prefix
-
-    Default: ``''``
-
-    Prefix to add to the base sls name when rendering rst file contents.
+    The title to use on the index.rst page.
 
 .. confval:: title_prefix
 
@@ -150,6 +159,13 @@ The way in which the .sls files under a source location are parsed can be contro
 
     Suffix to append to the document title. This may be needed to ensure title uniqueness when using extensions like
     ``confluencebuilder``.
+
+.. confval:: url_root
+
+    Default: ``None``
+
+    URL location of the source code controlled files for this source. Can be supplied as a full url starting with
+    ``http(s)`` or a path relative to :confval:`autosaltsls_source_url_root`.
 
 Source Settings Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -168,6 +184,10 @@ The following is a commented example of a source dict:
                 ],
                 # Use the templates in this dir in place of the standard ones
                 'template_path': '_templates/autosaltsls/states',
+                # Use the expanded name in the document title
+                'expand_title_name': True,
+                # Append a suffix to the title
+                'title_suffix': ' (states)',
             },
             # Parse the 'pillar' directory under autosaltsls_sources_root
             # and accept all other default settings
@@ -179,7 +199,7 @@ The following is a commented example of a source dict:
             },
             # Parse the 'states/roles' directory under autosaltsls_sources_root
             'states/roles': {
-                # Replace the title with 'Rolos'
+                # Replace the title with 'Roles'
                 'title': 'Roles',
                 # Point the source code control url root tote correct location
                 # as it is really under 'states'
