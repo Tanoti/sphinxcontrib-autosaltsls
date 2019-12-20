@@ -1,7 +1,7 @@
 History
 ========
 
-0.12.13 (2019-12-20)
+0.3.0 (2019-12-20)
 --------------------
 
 * Added :confval:`autosaltsls_display_master_indices` to suppress indices on master index page
