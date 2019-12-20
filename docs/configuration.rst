@@ -46,13 +46,6 @@ Optional
 
     Location where the generated .rst files will saved
 
-.. confval:: autosaltsls_sources_root
-
-    Default: ``..``
-
-    The directory under which the ``autosaltsls_sources`` are located. If you place your Sphinx project alongside the
-    sources then this can be omitted, otherwise provide the path (e.g. ``/srv/salt``).
-
 .. confval:: autosaltsls_comment_ignore_prefix
 
     Default: ``#!``
@@ -64,6 +57,13 @@ Optional
     Default: ``#``
 
     Character/string used to denote the contents of a document comment block.
+
+.. confval:: autosaltsls_display_master_indices
+
+    Default: ``True``
+
+    Generate the  ``genindex``, ``modindex`` and ``search`` indices on the master index page when
+    :confval:`autosaltsls_write_index_page` is set.
 
 .. confval:: autosaltsls_doc_prefix
 
@@ -84,6 +84,13 @@ Optional
 
     Remove the first space from a line within a comment block. This is to allow for the usual practice of putting a
     space after a comment character but where that space is not needed in the rendered output
+
+.. confval:: autosaltsls_sources_root
+
+    Default: ``..``
+
+    The directory under which the ``autosaltsls_sources`` are located. If you place your Sphinx project alongside the
+    sources then this can be omitted, otherwise provide the path (e.g. ``/srv/salt``).
 
 .. confval:: autosaltsls_source_url_root
 

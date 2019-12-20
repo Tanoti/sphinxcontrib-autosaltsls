@@ -140,7 +140,12 @@ def run_autosaltsls(app):
 
         # Render the template using Jinja
         with open(output_file, "w") as outfile:
-            outfile.write(template_obj.render(project=app.config.project))
+            outfile.write(
+                template_obj.render(
+                    project=app.config.project,
+                    display_master_indices=app.config.autosaltsls_display_master_indices,
+                )
+            )
 
 
 def setup(app):
@@ -159,6 +164,7 @@ def setup(app):
     app.add_config_value("autosaltsls_build_root", ".", "env")
     app.add_config_value("autosaltsls_write_index_page", False, "env")
     app.add_config_value("autosaltsls_index_template_path", "", "env")
+    app.add_config_value("autosaltsls_display_master_indices", True, "html")
 
     # Add an object type for the sls files
     app.add_object_type(
