@@ -3,7 +3,7 @@
 ``kickstart.kernel_settings_made (state)``
 **************************************************
 
-.. sls:: kickstart.kernel_settings_made
+.. state:: kickstart.kernel_settings_made
 
 *Ensure required kernel settings have been made*
 

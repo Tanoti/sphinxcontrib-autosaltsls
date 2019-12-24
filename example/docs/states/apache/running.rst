@@ -3,11 +3,11 @@
 ``apache.running (state)``
 **********************************
 
-.. sls:: apache.running
+.. state:: apache.running
 
 *Ensure the Apache instance is running*
 
-
+This state makes use of pillar data in :pillar:`apache`
 
 Steps
 ^^^^^

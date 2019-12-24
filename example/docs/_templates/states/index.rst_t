@@ -1,5 +1,5 @@
-{{ obj.title }}
-*******{{ "*" * obj.title|length }}
+{{ obj.settings.title }}
+*******{{ "*" * obj.settings.title|length }}
 
 .. note:: This is a custom index supplied from ``_templates/states`` to be used as an example.
 

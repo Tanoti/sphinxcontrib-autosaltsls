@@ -7,14 +7,18 @@ from jinja2 import Environment, FileSystemLoader
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
 
+# noinspection PyUnresolvedReferences
+from sphinx.util.console import darkgreen, bold
+
 from .mapper import AutoSaltSLSMapper
 
 __author__ = """John Hicks"""
 __email__ = "johnhicks@fico.com"
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 SETTINGS_STRING = [
     "build_dir",
+    "cross_ref_role",
     "prefix",
     "template_path",
     "title",
@@ -91,7 +95,7 @@ def run_autosaltsls(app):
 
     # Loop over the sources and do the work
     for source, settings in sources.items():
-        # Create a mapper for the source
+        # Create the mapper object
         sphinx_mapper = AutoSaltSLSMapper(app, source, settings)
 
         # Scan the files in the source to build an object list
@@ -148,11 +152,41 @@ def run_autosaltsls(app):
             )
 
 
+def config_autosaltsls(app, config):
+    """
+    Create custom source-specific Sphinx role/object types
+    """
+    logger.debug("JPH - {0}".format(config.autosaltsls_sources))
+    if isinstance(config.autosaltsls_sources, dict):
+        logger.debug("JPH - getting sources")
+        for source, settings in config.autosaltsls_sources.items():
+            logger.debug("JPH - {0}:{1}".format(source, settings))
+            try:
+                role = settings["cross_ref_role"]
+
+                # Create sphinx objects for the source role
+                app.add_object_type(
+                    role,
+                    role,
+                    objname="{0} file".format(role),
+                    indextemplate="pair: %s; {0} file".format(role),
+                )
+
+                logger.info(
+                    bold("[AutoSaltSLS] ")
+                    + "Adding custom Sphinx role/object type "
+                    + darkgreen("{0}".format(role))
+                )
+            except KeyError:
+                pass
+
+
 def setup(app):
     """
     Setup the Sphinx app with the default config values and add the ``sls`` object type.
     """
     app.connect("builder-inited", run_autosaltsls)
+    app.connect("config-inited", config_autosaltsls)
 
     app.add_config_value("autosaltsls_sources_root", "..", "env")
     app.add_config_value("autosaltsls_sources", None, "env")

@@ -16,6 +16,41 @@ from .objects import AutoSaltSLS
 logger = logging.getLogger(__name__)
 
 
+class AutoSaltSLSMapperSettings(object):
+    """
+    Class to hold the source-level settings for a AutoSaltSLSMapper object.
+    """
+
+    def __init__(self, app, source, settings):
+        # Pull in some app settings first
+        self.doc_prefix = app.config.autosaltsls_doc_prefix
+        self.comment_prefix = app.config.autosaltsls_comment_prefix
+        self.comment_ignore_prefix = app.config.autosaltsls_comment_ignore_prefix
+
+        # Now use the source settings
+        self.build_dir = settings.get("build_dir", None)
+        self.cross_ref_role = settings.get("cross_ref_role", "sls")
+        self.exclude = settings.get("exclude", [])
+        self.expand_title_name = settings.get("expand_title_name", None)
+        self.no_first_space = settings.get("no_first_space", True)
+        self.prefix = settings.get("prefix", None)
+        self.title = settings.get("title", source)
+        self.title_prefix = settings.get("title_prefix", "")
+        self.title_suffix = settings.get("title_suffix", "")
+
+        # Do some extra processing for the url_root
+        self.url_root = settings.get("url_root", None)
+
+        if app.config.autosaltsls_source_url_root:
+            if self.url_root is None:
+                self.url_root = app.config.autosaltsls_source_url_root + "/" + source
+            else:
+                if not self.url_root.startswith("http"):
+                    self.url_root = (
+                        app.config.autosaltsls_source_url_root + "/" + self.url_root
+                    )
+
+
 class AutoSaltSLSMapper(object):
     """
     Mapper to read sls files from a source location and to generate the relevant .rst files.
@@ -40,14 +75,7 @@ class AutoSaltSLSMapper(object):
         self._sub_object_count = None
 
         # Parse some settings into attributes
-        self.build_dir = settings.get("build_dir", None)
-        self.exclude = settings.get("exclude", [])
-        self.expand_title_name = settings.get("expand_title_name", None)
-        self.prefix = settings.get("prefix", None)
-        self.title = settings.get("title", source)
-        self.title_prefix = settings.get("title_prefix", "")
-        self.title_suffix = settings.get("title_suffix", "")
-        self.url_root = settings.get("url_root", None)
+        self.settings = AutoSaltSLSMapperSettings(app, source, settings)
 
         # Expand the source to a full dir
         if not os.path.isabs(self.source):
@@ -61,27 +89,17 @@ class AutoSaltSLSMapper(object):
         build_root = app.config.autosaltsls_build_root
         if not os.path.isabs(build_root):
             build_root = os.path.normpath(
-                os.path.join(app.confdir, app.config.autosaltsls_build_root,)
+                os.path.join(app.confdir, app.config.autosaltsls_build_root)
             )
 
         self.build_root = os.path.normpath(
             os.path.join(
                 build_root,
-                self.build_dir.replace("/", os.path.sep)
-                if self.build_dir
+                self.settings.build_dir.replace("/", os.path.sep)
+                if self.settings.build_dir
                 else self.source,
             )
         )
-
-        # Prefix the source url with the root from the config
-        if app.config.autosaltsls_source_url_root:
-            if self.url_root is None:
-                self.url_root = app.config.autosaltsls_source_url_root + "/" + source
-            else:
-                if not self.url_root.startswith("http"):
-                    self.url_root = (
-                        app.config.autosaltsls_source_url_root + "/" + self.url_root
-                    )
 
         # Work out the jinja template dirs to use
         template_paths = [
@@ -103,7 +121,7 @@ class AutoSaltSLSMapper(object):
             template_paths.insert(0, source_template_path)
 
         # Initialise the jinja rendering engine
-        self.jinja_env = Environment(loader=FileSystemLoader(template_paths),)
+        self.jinja_env = Environment(loader=FileSystemLoader(template_paths))
 
     def load(self):
         """
@@ -220,11 +238,13 @@ class AutoSaltSLSMapper(object):
 
             source_url_path = None
 
-            if self.url_root:
-                source_url_path = self.url_root + "/" + rel_path.replace("\\", "/")
+            if self.settings.url_root:
+                source_url_path = (
+                    self.settings.url_root + "/" + rel_path.replace("\\", "/")
+                )
 
             # Skip any paths in the exclude list
-            if rel_path in self.exclude:
+            if rel_path in self.settings.exclude:
                 logger.info(
                     bold("[AutoSaltSLS] ") + darkgreen("Ignoring {0}".format(dir_path))
                 )
@@ -246,12 +266,8 @@ class AutoSaltSLSMapper(object):
                     self.app,
                     rel_path,
                     self.full_source,
-                    no_first_space=self.settings.get("no_first_space"),
+                    self.settings,
                     source_url_root=source_url_path,
-                    prefix=self.prefix,
-                    title_prefix=self.title_prefix,
-                    title_suffix=self.title_suffix,
-                    expand_title_name=self.expand_title_name,
                 )
                 self.sls_objects.append(sls_parent)
 
@@ -275,13 +291,9 @@ class AutoSaltSLSMapper(object):
                         os.path.join(self.full_source, rel_path)
                         if rel_path != "."
                         else self.full_source,
+                        self.settings,
                         parent_name=sls_parent.name if sls_parent else None,
-                        no_first_space=self.settings.get("no_first_space"),
                         source_url_root=source_url_path,
-                        prefix=self.prefix,
-                        title_prefix=self.title_prefix,
-                        title_suffix=self.title_suffix,
-                        expand_title_name=self.expand_title_name,
                     )
 
                     if sls_parent:
@@ -304,7 +316,7 @@ class AutoSaltSLSMapper(object):
                 if not sls_obj.child_count:
                     rst_filename = sls_obj.basename.replace(".", os.sep) + ".rst"
 
-                sls_obj.set_initfile(rst_filename=rst_filename,)
+                sls_obj.set_initfile(rst_filename=rst_filename)
 
         # Change back to the starting dir
         os.chdir(cwd)

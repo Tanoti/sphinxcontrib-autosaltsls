@@ -1,7 +1,7 @@
 ``kickstart (state)``
 ************************
 
-.. sls:: kickstart
+.. state:: kickstart
 
 *No content*
 

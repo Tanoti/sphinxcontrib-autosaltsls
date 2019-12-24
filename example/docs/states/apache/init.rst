@@ -3,7 +3,7 @@
 ``apache (state) [init]``
 **************************
 
-.. sls:: apache
+.. state:: apache
 
 *Ensure the Apache instance is at least installed*
 
@@ -12,7 +12,7 @@ Apache installed with SSL by default
 Includes
 ^^^^^^^^
 
-    * :sls:`.installed <apache.installed>`
-    * :sls:`.running <apache.running>`
+    * :state:`.installed <apache.installed>`
+    * :state:`.running <apache.running>`
 
 :doc:`[main] <main>`
