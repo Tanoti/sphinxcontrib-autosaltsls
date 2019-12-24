@@ -120,6 +120,15 @@ The way in which the .sls files under a source location are parsed can be contro
 
     Path to put the built .rst files.
 
+.. confval:: cross_ref_role
+
+    Default: ``sls``
+
+    Sphinx role to use when creating cross-reference targets in documents. By default all sls files are referenced using
+    the ``:sls:`` role but this can cause problems when two targets from different sources have the same name. For
+    example, ``states/apache.sls`` and ``pillar/apache.sls`` would both have the cross reference ``:sls:`apache``` but
+    only one would be rendered properly.
+
 .. confval:: exclude
 
     Default: ``None``

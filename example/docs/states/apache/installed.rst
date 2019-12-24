@@ -3,7 +3,7 @@
 ``apache.installed (state)``
 ************************************
 
-.. sls:: apache.installed
+.. state:: apache.installed
 
 *Ensure the Apache instance is installed*
 

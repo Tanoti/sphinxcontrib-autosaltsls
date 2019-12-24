@@ -1,7 +1,7 @@
 ``{{ sls.title }}``
 *******{{ "*" * sls.title|length }}
 
-.. sls:: {{ sls.prefixed_name }}
+.. {{ sls.source_settings.cross_ref_role }}:: {{ sls.prefixed_name }}
 
 {%- if not sls.entries %}
 

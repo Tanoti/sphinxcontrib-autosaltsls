@@ -1,7 +1,7 @@
 ``apache (state)``
 *********************
 
-.. sls:: apache
+.. state:: apache
 
 *Ensure the Apache instance is at least installed*
 

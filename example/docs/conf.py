@@ -60,6 +60,7 @@ html_static_path = ['_static']
 autosaltsls_sources = {
     'states': {
         'title': 'States',
+        'cross_ref_role': 'state',
         'expand_title_name': True,
         'exclude': [
             'roles',
@@ -69,6 +70,7 @@ autosaltsls_sources = {
     },
     'pillar': {
         'title': 'Pillar',
+        'cross_ref_role': 'pillar',
         'title_suffix': ' (pillar)'
     },
     'reactor': {
@@ -76,7 +78,7 @@ autosaltsls_sources = {
     },
     'states/roles': {
         'title': 'Roles',
-        'url_root': 'states/roles',
+        'cross_ref_role': 'role',
         'build_dir': 'roles',
         'prefix': 'roles.',
         'title_prefix': 'Roles-',

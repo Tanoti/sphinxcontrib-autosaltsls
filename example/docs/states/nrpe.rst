@@ -3,7 +3,7 @@
 ``nrpe (state)``
 ************************
 
-.. sls:: nrpe
+.. state:: nrpe
 
 *Ensure nrpe is installed*
 
