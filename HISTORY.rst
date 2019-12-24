@@ -1,6 +1,11 @@
 History
 ========
 
+0.4.0 (2019-12-23)
+--------------------
+
+* Added support for source-specific Sphinx role/object types
+
 0.3.0 (2019-12-20)
 --------------------
 
