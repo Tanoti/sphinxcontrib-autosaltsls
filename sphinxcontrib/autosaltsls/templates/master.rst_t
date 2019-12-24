@@ -9,6 +9,7 @@
    */index
 
 {%- if display_master_indices %}
+
 Indices and tables
 *******************
 

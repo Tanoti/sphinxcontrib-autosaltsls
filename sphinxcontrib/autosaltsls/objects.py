@@ -27,31 +27,15 @@ class AutoSaltSLS(object):
     source_path
         Full path to the location of the expected sls file for this object
 
+    source_settings
+        AutoSaltSLSMapperSettings object for the source creating this instance
+
     parent_name : None
         Name of the parent group
         (e.g. for 'ssl_enabled.sls' this might be 'apache')
 
-    doc_prefix : None
-        Prefix to identify an AutoSaltSLS comment document. Defaults to ``autosaltsls_doc_prefix`` config value
-
-    comment_prefix : None
-        Prefix character to identify a line in a comment document. Defaults to ``autosaltsls_comment_prefix`` config
-        value
-
-    no_first_space: True
-        Remove the fist space character of a comment document line
-
     source_url_root: None
         URL root to the source control viewable files location
-
-    prefix: None
-        Prefix to add to the base sls name when rendering rst file contents
-
-    title_prefix: ''
-        Prefix to add to the title when rendering the rst file
-
-    title_suffix: ''
-        Suffix to append to the title when rendering the rst file
     """
 
     def __init__(
@@ -59,53 +43,21 @@ class AutoSaltSLS(object):
         app,
         basename,
         source_path,
-        comment_prefix=None,
-        comment_ignore_prefix=None,
-        expand_title_name=None,
-        doc_prefix=None,
-        no_first_space=True,
+        source_settings,
         parent_name=None,
-        prefix=None,
         source_url_root=None,
-        title_prefix="",
-        title_suffix="",
     ):
         self.app = app
         self.basename, self.filename = self._parse_name(basename)
         self.source_path = source_path
         self.parent_name = parent_name
-        self.no_first_space = False if no_first_space is False else True
-        self.no_first_space = False if no_first_space is False else True
+        self.source_settings = source_settings
+        self.source_url_root = source_url_root
         self.full_filename = None
-        self.expand_title_name = expand_title_name
-        self.prefix = prefix
-        self.title_prefix = title_prefix
-        self.title_suffix = title_suffix
 
         # Build the full filename
         if self.filename:
             self.full_filename = os.path.join(source_path, self.filename)
-
-        # Default some settings to the values in the app config
-        if doc_prefix is not None:
-            self.doc_prefix = doc_prefix
-        else:
-            self.doc_prefix = app.config.autosaltsls_doc_prefix
-
-        if comment_prefix is not None:
-            self.comment_prefix = comment_prefix
-        else:
-            self.comment_prefix = app.config.autosaltsls_comment_prefix
-
-        if comment_ignore_prefix is not None:
-            self.comment_ignore_prefix = comment_prefix
-        else:
-            self.comment_ignore_prefix = app.config.autosaltsls_comment_ignore_prefix
-
-        if source_url_root is not None:
-            self.source_url_root = source_url_root
-        else:
-            self.source_url_root = app.config.autosaltsls_source_url_root
 
         # Initialise some properties
         self.topfile = True if self.filename == "top.sls" else False
@@ -275,14 +227,14 @@ class AutoSaltSLS(object):
                 # Read each line
                 for line in sls_file:
                     # Skip lines starting with comment ignore prefix (e.g. '#!')
-                    if line.startswith(self.comment_ignore_prefix):
+                    if line.startswith(self.source_settings.comment_ignore_prefix):
                         continue
 
                     # Remove the newline
                     line = line.strip("\n")
 
                     # Start a block and create an AutoSaltSLSEntry object when we get the doc prefix (e.g. '###')
-                    if line.startswith(self.doc_prefix):
+                    if line.startswith(self.source_settings.doc_prefix):
                         # Finish any current entry and store it in case we have two concurrent blocks without
                         # any lines in between
                         if entry:
@@ -292,7 +244,7 @@ class AutoSaltSLS(object):
                         entry = AutoSaltSLSEntry()
 
                         # Strip off the prefix
-                        line = line.replace(self.doc_prefix, "")
+                        line = line.replace(self.source_settings.doc_prefix, "")
 
                         # Check for directive keywords, stripping spaces from the fields
                         if line and not line.isspace():
@@ -315,7 +267,9 @@ class AutoSaltSLS(object):
                         continue
 
                     # End the block
-                    if entry and not line.startswith(self.comment_prefix):
+                    if entry and not line.startswith(
+                        self.source_settings.comment_prefix
+                    ):
                         # Capture the first line (YAML ID) as content
                         if entry.show_id or entry.summary_id or entry.step_id:
                             if line[-1] == ":":
@@ -358,8 +312,8 @@ class AutoSaltSLS(object):
                         continue
 
                     # Any other comment line within an active block is part of the entry
-                    if entry and line.startswith(self.comment_prefix):
-                        line = line.replace(self.comment_prefix, "")
+                    if entry and line.startswith(self.source_settings.comment_prefix):
+                        line = line.replace(self.source_settings.comment_prefix, "")
 
                         if self.app.config.autosaltsls_remove_first_space:
                             line = line[1:]
@@ -378,8 +332,8 @@ class AutoSaltSLS(object):
 
         :return: str
         """
-        if self.prefix:
-            return self.prefix + self.name
+        if self.source_settings.prefix:
+            return self.source_settings.prefix + self.name
 
         return self.name
 
@@ -414,13 +368,17 @@ class AutoSaltSLS(object):
     def title(self):
         if self.topfile:
             title = self.filename
-        elif self.expand_title_name:
+        elif self.source_settings.expand_title_name:
             title = self.name
         else:
             title = self.basename
 
-        if self.title_suffix or self.title_prefix:
-            title = "{0}{1}{2}".format(self.title_prefix, title, self.title_suffix)
+        if self.source_settings.title_suffix or self.source_settings.title_prefix:
+            title = "{0}{1}{2}".format(
+                self.source_settings.title_prefix,
+                title,
+                self.source_settings.title_suffix,
+            )
 
         return title
 

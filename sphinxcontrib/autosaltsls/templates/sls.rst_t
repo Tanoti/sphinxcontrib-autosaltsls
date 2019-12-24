@@ -5,7 +5,7 @@
 ``{{ sls.title }}{{ ' [init]' if sls.initfile else '' }}``
 ************{{ "*" * sls.title|length }}
 
-.. sls:: {{ sls.prefixed_name }}
+.. {{ sls.source_settings.cross_ref_role }}:: {{ sls.prefixed_name }}
 
 {%- if not sls.entries %}
 
@@ -26,7 +26,7 @@ Includes
 {{ sls.include.text }}
 
 {%-     for item in sls.include.includes %}
-    * :sls:`{{ item }}`
+    * :{{ sls.source_settings.cross_ref_role }}:`{{ item }}`
 {%-     endfor %}
 {%-   endif %}
 

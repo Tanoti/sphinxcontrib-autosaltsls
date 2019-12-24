@@ -1,6 +1,7 @@
 ###
 # Ensure the Apache instance is running
 #
+# This state makes use of pillar data in :pillar:`apache`
 
 ### step
 # Remove deprecated conf files

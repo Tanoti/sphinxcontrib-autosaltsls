@@ -65,7 +65,8 @@ Cross-referencing SLS files
 ----------------------------
 The AutoSaltSLS extension makes use of a custom Sphinx role ``sls`` to create cross-references between sls files. This
 is how the :confval:`include` directive can build the list included files and have them link to their target. You can
-use the ``sls`` role to insert your own cross-references between sls files.
+use the default ``sls`` role or a source-specific role you have defined using :confval:`cross_ref_role` to insert your
+own cross-references between sls files.
 
 Configuration Example
 ----------------------
