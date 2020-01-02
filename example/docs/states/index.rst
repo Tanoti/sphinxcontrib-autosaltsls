@@ -35,3 +35,4 @@ Other Files
     kickstart  <kickstart/main>
     nginx  <nginx>
     nrpe  <nrpe>
+    template  <template>

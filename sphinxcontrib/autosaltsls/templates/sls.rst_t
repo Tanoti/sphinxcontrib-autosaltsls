@@ -8,6 +8,7 @@
 .. {{ sls.source_settings.cross_ref_role }}:: {{ sls.prefixed_name }}
 
 {%- if sls.format %}
+
 **File Format: {{ sls.format }}**
 {%- endif %}
 
