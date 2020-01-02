@@ -85,5 +85,6 @@ autosaltsls_sources = {
     },
 }
 
-autosaltsls_write_index_page = True
+autosaltsls_indented_comments = True
 autosaltsls_index_template_path = '_templates'
+autosaltsls_write_index_page = True

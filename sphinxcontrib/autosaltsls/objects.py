@@ -227,14 +227,19 @@ class AutoSaltSLS(object):
                 # Read each line
                 for line in sls_file:
                     # Skip lines starting with comment ignore prefix (e.g. '#!')
-                    if line.startswith(self.source_settings.comment_ignore_prefix):
+                    # # if line.startswith(self.source_settings.comment_ignore_prefix):
+                    if self._check_line_startswith(
+                        line, self.source_settings.comment_ignore_prefix
+                    ):
                         continue
 
                     # Remove the newline
                     line = line.strip("\n")
 
                     # Start a block and create an AutoSaltSLSEntry object when we get the doc prefix (e.g. '###')
-                    if line.startswith(self.source_settings.doc_prefix):
+                    if self._check_line_startswith(
+                        line, self.source_settings.doc_prefix
+                    ):
                         # Finish any current entry and store it in case we have two concurrent blocks without
                         # any lines in between
                         if entry:
@@ -267,8 +272,8 @@ class AutoSaltSLS(object):
                         continue
 
                     # End the block
-                    if entry and not line.startswith(
-                        self.source_settings.comment_prefix
+                    if entry and not self._check_line_startswith(
+                        line, self.source_settings.comment_prefix,
                     ):
                         # Capture the first line (YAML ID) as content
                         if entry.show_id or entry.summary_id or entry.step_id:
@@ -278,6 +283,11 @@ class AutoSaltSLS(object):
                             if entry.summary_id or entry.step_id:
                                 # Prepend with a newline so the summary is correctly identified later
                                 entry.prepend_line("")
+
+                                # Remove any leading whitespace as the summary has to be left-justified
+                                if self.app.config.autosaltsls_indented_comments:
+                                    line = line.lstrip(" ")
+
                                 entry.prepend_line(line)
                             else:
                                 entry.append_line(line)
@@ -309,10 +319,16 @@ class AutoSaltSLS(object):
                         # Add the entry to the main list
                         self.add_entry(entry)
                         entry = None
+
                         continue
 
                     # Any other comment line within an active block is part of the entry
-                    if entry and line.startswith(self.source_settings.comment_prefix):
+                    if entry and self._check_line_startswith(
+                        line, self.source_settings.comment_prefix
+                    ):
+                        if self.app.config.autosaltsls_indented_comments:
+                            line = line.lstrip(" ")
+
                         line = line.replace(self.source_settings.comment_prefix, "")
 
                         if self.app.config.autosaltsls_remove_first_space:
@@ -454,6 +470,21 @@ class AutoSaltSLS(object):
     #
     # Private functions
     #
+    def _check_line_startswith(
+        self, line, pattern,
+    ):
+        """
+        Check if a line starts with a pattern, optionally ignoring leading spaces if ``autosaltsls_indented_comments``
+        is set.
+        """
+        if self.app.config.autosaltsls_indented_comments:
+            line = line.lstrip(" ")
+
+        if line.startswith(pattern):
+            return True
+
+        return False
+
     @staticmethod
     def _parse_name(basename):
         # Replace the path separator with a dot

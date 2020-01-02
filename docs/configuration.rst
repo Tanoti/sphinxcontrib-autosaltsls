@@ -71,6 +71,13 @@ Optional
 
     String used to denote the start of a document comment block.
 
+.. confval:: autosaltsls_indented_comments
+
+    Default: ``False``
+
+    Comment blocks can be indented. All line parsing and processing routines will remove leading spaces before
+    the :confval:`autosaltsls_doc_prefix` or :confval:`autosaltsls_comment_prefix` characters.
+
 .. confval:: autosaltsls_index_template_path
 
     Default: ``''``
