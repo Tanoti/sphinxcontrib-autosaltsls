@@ -33,4 +33,5 @@ Other Files
 
     apache  <apache/main>
     kickstart  <kickstart/main>
+    nginx  <nginx>
     nrpe  <nrpe>
