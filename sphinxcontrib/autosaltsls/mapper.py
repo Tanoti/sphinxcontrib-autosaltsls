@@ -371,7 +371,7 @@ class AutoSaltSLSMapper(object):
 
         # Loop over the sls objects and write out their rst files
         sls_objects = self.visible_sls_objects
-        logger.debug('JPH - {0}'.format(sls_objects))
+        logger.debug("JPH - {0}".format(sls_objects))
 
         for sls_obj in status_iterator(
             sls_objects,
@@ -403,7 +403,4 @@ class AutoSaltSLSMapper(object):
 # Private functions
 #
 def _stringify_sls(sls_obj):
-    return "{0} ({1})".format(
-        sls_obj.name,
-        sls_obj.filename,
-    )
+    return "{0} ({1})".format(sls_obj.name, sls_obj.filename,)
