@@ -185,20 +185,23 @@ def setup(app):
     """
     Setup the Sphinx app with the default config values and add the ``sls`` object type.
     """
-    app.connect("builder-inited", run_autosaltsls)
+    # Connect our functions to Sphinx events
     app.connect("config-inited", config_autosaltsls)
+    app.connect("builder-inited", run_autosaltsls)
 
-    app.add_config_value("autosaltsls_sources_root", "..", "env")
-    app.add_config_value("autosaltsls_sources", None, "env")
-    app.add_config_value("autosaltsls_doc_prefix", "###", "html")
-    app.add_config_value("autosaltsls_comment_prefix", "#", "html")
-    app.add_config_value("autosaltsls_comment_ignore_prefix", "#!", "html")
-    app.add_config_value("autosaltsls_remove_first_space", True, "html")
-    app.add_config_value("autosaltsls_source_url_root", None, "html")
+    # Defined the config options we have
     app.add_config_value("autosaltsls_build_root", ".", "env")
-    app.add_config_value("autosaltsls_write_index_page", False, "env")
-    app.add_config_value("autosaltsls_index_template_path", "", "env")
     app.add_config_value("autosaltsls_display_master_indices", True, "html")
+    app.add_config_value("autosaltsls_doc_prefix", "###", "html")
+    app.add_config_value("autosaltsls_comment_ignore_prefix", "#!", "html")
+    app.add_config_value("autosaltsls_indented_comments", False, "html")
+    app.add_config_value("autosaltsls_comment_prefix", "#", "html")
+    app.add_config_value("autosaltsls_index_template_path", "", "env")
+    app.add_config_value("autosaltsls_remove_first_space", True, "html")
+    app.add_config_value("autosaltsls_sources", None, "env")
+    app.add_config_value("autosaltsls_sources_root", "..", "env")
+    app.add_config_value("autosaltsls_source_url_root", None, "html")
+    app.add_config_value("autosaltsls_write_index_page", False, "env")
 
     # Add an object type for the sls files
     app.add_object_type(
