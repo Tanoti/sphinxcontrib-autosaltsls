@@ -233,14 +233,14 @@ class AutoSaltSLS(object):
                     # Remove the newline
                     line = line.strip("\n")
 
+                    # Grab the file format from the first line of the file
+                    if line.startswith("#!") and line_no == 1:
+                        self.format = line.replace("#!", "").strip()
+
                     # Skip lines starting with comment ignore prefix (e.g. '#!')
                     if self._check_line_startswith(
                         line, self.source_settings.comment_ignore_prefix
                     ):
-                        # Grab the file format from the first line in the file
-                        if line_no == 1:
-                            self.format = line.replace(self.source_settings.comment_ignore_prefix, "").strip()
-
                         continue
 
                     # Start a block and create an AutoSaltSLSEntry object when we get the doc prefix (e.g. '###')
