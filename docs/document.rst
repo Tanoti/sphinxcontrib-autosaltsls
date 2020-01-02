@@ -8,11 +8,12 @@ by the parser.
 A block is identified by the parsing engine when it detects the start prefix specified by ``autosaltsls_doc_prefix``
 (default is '###'). Then all subsequent lines that start with the comment character specified by
 ``autosaltsls_comment_prefix`` (default is '#') are loaded as data. The block ends when the first non-comment line
-or new block start string is read. Lines that begin with the ignore prefix specified in ``autosaltsls_comment_ignore_prefix``
-(default is '#!') are not parsed but will be loaded as the file format when it is the first line of the file.
+or new block start string is read. Lines that begin with the ignore prefix specified in
+``autosaltsls_comment_ignore_prefix`` (default is '#!') are not parsed but will be loaded as the file format when it is
+the first line of the file.
 
-The first document comment block in a file is denoted as being the Header and all other comment blocks are the Body. This
-allows for the indexing routines to extract the header summaries, etc.
+The first document comment block in a file is denoted as being the Header and all other comment blocks are the Body.
+This allows for the indexing routines to extract the header summaries, etc.
 
 Any valid Sphinx formatting commands should be able to be used in a document comment block.
 
@@ -25,9 +26,21 @@ start prefix (multiple directives can be supplied by separating them with commas
 
     Scope: File
 
-    Identifies the current sls file as a salt top file (See `Salt Top Files <https://docs.saltstack.com/en/latest/ref/states/top.html>`_).
-    Files with the name ``top.sls`` are automatically identified so this is only needed for alternate top files that
-    might be passed to ``state.top``.
+    Identifies the current sls file as a salt top file (See
+    `Salt Top Files <https://docs.saltstack.com/en/latest/ref/states/top.html>`_). Files with the name ``top.sls`` are
+    automatically identified so this is only needed for alternate top files that might be passed to ``state.top``.
+
+.. confval:: hidden
+
+    Scope: File
+
+    Do not generate documentation for this file, also sets :confval:`ignore`.
+
+.. confval:: ignore
+
+    Scope: File
+
+    Immediately stop processing the file. Any entries already found are returned as normal.
 
 .. confval:: include
 
@@ -99,3 +112,4 @@ The following is a contrived comment block::
     # generated using the first non-comment line following the comment
     # block. The entry is also rendered as a numbered step.
     This-line-becomes-a-step-summary
+
