@@ -133,7 +133,7 @@ class AutoSaltSLSMapper(object):
             bold("[AutoSaltSLS] Reading primary sls... "),
             "darkgreen",
             self.sls_objects_count,
-            self.app.verbosity,
+            1,
             stringify_func=_stringify_sls,
         ):
             # Parse the sls object's file and add to the object as an entry
@@ -162,7 +162,7 @@ class AutoSaltSLSMapper(object):
                 bold("[AutoSaltSLS] Reading child sls... "),
                 "darkgreen",
                 sls_obj.child_count,
-                self.app.verbosity,
+                1,
                 stringify_func=_stringify_sls,
             ):
                 sls_child_obj.parse_file()
@@ -180,7 +180,7 @@ class AutoSaltSLSMapper(object):
 
         :return: list
         """
-        sls_objs = [x for x in self.sls_objects if not x.topfile]
+        sls_objs = [x for x in self.sls_objects if not x.topfile and not x.hidden]
         sls_objs.sort(key=lambda sls: sls.name)
         return sls_objs
 
@@ -338,7 +338,16 @@ class AutoSaltSLSMapper(object):
 
         :return: list
         """
-        return [x for x in self.sls_objects if x.topfile]
+        return [x for x in self.sls_objects if x.topfile and not x.hidden]
+
+    @property
+    def visible_sls_objects(self):
+        """
+        Return a list of all sls objects that are not marked as 'hidden'
+
+        :return: list
+        """
+        return [x for x in self.sls_objects if not x.hidden]
 
     def write(self):
         """
@@ -361,12 +370,15 @@ class AutoSaltSLSMapper(object):
                 )
 
         # Loop over the sls objects and write out their rst files
+        sls_objects = self.visible_sls_objects
+        logger.debug("JPH - {0}".format(sls_objects))
+
         for sls_obj in status_iterator(
-            self.sls_objects,
+            sls_objects,
             bold("[AutoSaltSLS] Generating rst files... "),
             "darkgreen",
-            self.sls_objects_count,
-            self.app.verbosity,
+            len(sls_objects),
+            1,
         ):
             sls_obj.write_rst_files(self.jinja_env, self.build_root)
 
@@ -391,4 +403,4 @@ class AutoSaltSLSMapper(object):
 # Private functions
 #
 def _stringify_sls(sls_obj):
-    return "{0} ({1})".format(sls_obj.name, sls_obj.filename)
+    return "{0} ({1})".format(sls_obj.name, sls_obj.filename,)
