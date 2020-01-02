@@ -9,7 +9,7 @@ A block is identified by the parsing engine when it detects the start prefix spe
 (default is '###'). Then all subsequent lines that start with the comment character specified by
 ``autosaltsls_comment_prefix`` (default is '#') are loaded as data. The block ends when the first non-comment line
 or new block start string is read. Lines that begin with the ignore prefix specified in ``autosaltsls_comment_ignore_prefix``
-(default is '#!') are not loaded.
+(default is '#!') are not parsed but will be loaded as the file format when it is the first line of the file.
 
 The first document comment block in a file is denoted as being the Header and all other comment blocks are the Body. This
 allows for the indexing routines to extract the header summaries, etc.
