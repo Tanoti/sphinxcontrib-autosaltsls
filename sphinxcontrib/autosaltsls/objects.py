@@ -55,6 +55,7 @@ class AutoSaltSLS(object):
         self.source_url_root = source_url_root
         self.full_filename = None
         self.format = None
+        self.hidden = False
 
         # Build the full filename
         if self.filename:
@@ -263,19 +264,41 @@ class AutoSaltSLS(object):
                             directives = [x.strip() for x in line.split(",")]
 
                             # Process directives
+                            ignore = False
                             for directive in directives:
-                                # 'topfile' is an sls directive
-                                if directive == "topfile":
+                                # 'hidden' marks the file as not to have documentation generated so we might as well
+                                # treat it as 'ignore' too
+                                if "hidden" in directives:
                                     logger.debug(
-                                        "[AutoSaltSLS] Marking sls {0} as top file".format(
+                                        "[AutoSaltSLS] Marking sls {0} as hidden due to directive".format(
+                                            self.basename
+                                        )
+                                    )
+                                    self.hidden = True
+                                    ignore = True
+                                # 'ignore' halts all processing for this file
+                                elif directive == "ignore":
+                                    logger.debug(
+                                        "[AutoSaltSLS] Aborting processing of sls {0} due to 'ignore' directive".format(
+                                            self.basename
+                                        )
+                                    )
+                                    ignore = True
+                                # 'topfile' is an sls directive
+                                elif directive == "topfile":
+                                    logger.debug(
+                                        "[AutoSaltSLS] Marking sls {0} as top file due to directive".format(
                                             self.basename
                                         )
                                     )
                                     self.topfile = True
-
                                 # Everything else is for an entry
                                 elif hasattr(entry, directive):
                                     setattr(entry, directive, True)
+
+                            # Check the ignore flag and stop processing
+                            if ignore:
+                                break
                         continue
 
                     # End the block
