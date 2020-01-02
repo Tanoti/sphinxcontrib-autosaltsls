@@ -54,6 +54,7 @@ class AutoSaltSLS(object):
         self.source_settings = source_settings
         self.source_url_root = source_url_root
         self.full_filename = None
+        self.format = None
 
         # Build the full filename
         if self.filename:
@@ -223,18 +224,24 @@ class AutoSaltSLS(object):
             with open(self.full_filename) as sls_file:
                 entry = None
                 included = False
+                line_no = 0
 
                 # Read each line
                 for line in sls_file:
-                    # Skip lines starting with comment ignore prefix (e.g. '#!')
-                    # # if line.startswith(self.source_settings.comment_ignore_prefix):
-                    if self._check_line_startswith(
-                        line, self.source_settings.comment_ignore_prefix
-                    ):
-                        continue
+                    line_no += 1
 
                     # Remove the newline
                     line = line.strip("\n")
+
+                    # Skip lines starting with comment ignore prefix (e.g. '#!')
+                    if self._check_line_startswith(
+                        line, self.source_settings.comment_ignore_prefix
+                    ):
+                        # Grab the file format from the first line in the file
+                        if line_no == 1:
+                            self.format = line.replace(self.source_settings.comment_ignore_prefix, "").strip()
+
+                        continue
 
                     # Start a block and create an AutoSaltSLSEntry object when we get the doc prefix (e.g. '###')
                     if self._check_line_startswith(
