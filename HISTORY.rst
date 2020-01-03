@@ -1,6 +1,19 @@
 History
 ========
 
+0.5.0 (2020-01-03)
+--------------------
+
+* Fixed `Issue #10 <https://github.com/Tanoti/sphinxcontrib-autosaltsls/issues/10>`_ and added :confval:`autosaltsls_indented_comments` for this
+* Added new directives:
+
+    * :confval:`hidden` (`Issue #4 <https://github.com/Tanoti/sphinxcontrib-autosaltsls/issues/4>`_)
+    * :confval:`ignore` (`Issue #2 <https://github.com/Tanoti/sphinxcontrib-autosaltsls/issues/2>`_)
+    * :confval:`environment` (`Issue #7 <https://github.com/Tanoti/sphinxcontrib-autosaltsls/issues/7>`_)
+    * :confval:`topfile_id` (`Issue #7 <https://github.com/Tanoti/sphinxcontrib-autosaltsls/issues/7>`_)
+
+* Detect and display sls file format if set using '#!' at the top of the file (`Issue #3 <https://github.com/Tanoti/sphinxcontrib-autosaltsls/issues/3>`_)
+
 0.4.0 (2019-12-23)
 --------------------
 

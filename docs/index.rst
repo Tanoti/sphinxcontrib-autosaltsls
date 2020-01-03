@@ -1,5 +1,5 @@
-Welcome to Sphinx AutoSaltSLS's documentation!
-==============================================
+Sphinx AutoSaltSLS documentation
+===================================
 
 .. toctree::
     :maxdepth: 2
