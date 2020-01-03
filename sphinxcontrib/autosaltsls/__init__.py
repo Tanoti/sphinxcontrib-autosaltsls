@@ -156,27 +156,30 @@ def config_autosaltsls(app, config):
     """
     Create custom source-specific Sphinx role/object types
     """
-    logger.debug("JPH - {0}".format(config.autosaltsls_sources))
     if isinstance(config.autosaltsls_sources, dict):
-        logger.debug("JPH - getting sources")
         for source, settings in config.autosaltsls_sources.items():
-            logger.debug("JPH - {0}:{1}".format(source, settings))
             try:
                 role = settings["cross_ref_role"]
 
                 # Create sphinx objects for the source role
-                app.add_object_type(
-                    role,
-                    role,
-                    objname="{0} file".format(role),
-                    indextemplate="pair: %s; {0} file".format(role),
-                )
+                try:
+                    app.add_object_type(
+                        role,
+                        role,
+                        objname="{0} file".format(role),
+                        indextemplate="pair: %s; {0} file".format(role),
+                    )
 
-                logger.info(
-                    bold("[AutoSaltSLS] ")
-                    + "Adding custom Sphinx role/object type "
-                    + darkgreen("{0}".format(role))
-                )
+                    logger.info(
+                        bold("[AutoSaltSLS] ")
+                        + "Adding custom Sphinx role/object type "
+                        + darkgreen("{0}".format(role))
+                    )
+                except ExtensionError as e:
+                    if "directive is already registered" in str(e):
+                        pass
+                    else:
+                        raise e
             except KeyError:
                 pass
 
