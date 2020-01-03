@@ -229,7 +229,6 @@ class AutoSaltSLSMapper(object):
         self.sls_objects = []
 
         for dir_path, dir_names, filenames in os.walk("."):
-            # logger.debug('JPH - {0}, {1}, {2}'.format(dir_path, dir_names, filenames))
             # Remove the source from the dir we are processing as this will give us the sls namespace
             p = pathlib.Path(dir_path)
             rel_path = dir_path
@@ -371,7 +370,6 @@ class AutoSaltSLSMapper(object):
 
         # Loop over the sls objects and write out their rst files
         sls_objects = self.visible_sls_objects
-        logger.debug("JPH - {0}".format(sls_objects))
 
         for sls_obj in status_iterator(
             sls_objects,

@@ -1,6 +1,8 @@
 ### topfile
 # Alternate top file for use when kickstarting a host
 #
-'*':
-  - nrpe
-  - kickstart.kernel_settings_made
+base:
+  ### topfile_id
+  '*':
+    - nrpe
+    - kickstart.kernel_settings_made
