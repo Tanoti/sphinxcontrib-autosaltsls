@@ -129,8 +129,6 @@ The way in which the .sls files under a source location are parsed can be contro
 
 .. confval:: cross_ref_role
 
-    .. versionadded:: 0.4.0
-
     Default: ``sls``
 
     Sphinx role to use when creating cross-reference targets in documents. By default all sls files are referenced using
@@ -237,3 +235,5 @@ The following is a commented example of a source dict:
                 'prefix': 'roles.',
             },
         }
+
+For a more complete example, please view the `example` page.
