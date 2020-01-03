@@ -339,7 +339,11 @@ class AutoSaltSLS(object):
                             if "include:" in line:
                                 included = True
                                 continue
-                            elif (included or entry.topfile_id) and line and not line.isspace():
+                            elif (
+                                (included or entry.topfile_id)
+                                and line
+                                and not line.isspace()
+                            ):
                                 # Use regex to match an include entry and store it
                                 # First non-match will trigger block end
                                 match = re.search("^\s+-\s+([\s\w\-.:]+)", line)
@@ -347,7 +351,9 @@ class AutoSaltSLS(object):
                                     text = match.group(1)
 
                                     if "match:" in text:
-                                        entry.match_type = text.replace("match:", "").strip()
+                                        entry.match_type = text.replace(
+                                            "match:", ""
+                                        ).strip()
                                         continue
                                     if text.startswith("."):
                                         text = "{0} <{1}{2}>".format(
@@ -618,7 +624,7 @@ class AutoSaltSLSEntry(object):
         include
             Include statement to add
         """
-        logger.debug('JPH - Adding include [{0}]'.format(include))
+        logger.debug("JPH - Adding include [{0}]".format(include))
         self.includes.append(include)
         self.include = True
 
@@ -717,7 +723,13 @@ class AutoSaltSLSEntry(object):
         if new_val is not None:
             self._process_id = new_val
         elif self._process_id is None:
-            if self.show_id or self.summary_id or self.step_id or self.environment or self.topfile_id:
+            if (
+                self.show_id
+                or self.summary_id
+                or self.step_id
+                or self.environment
+                or self.topfile_id
+            ):
                 self._process_id = True
 
         return self._process_id
