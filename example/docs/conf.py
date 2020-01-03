@@ -78,7 +78,7 @@ autosaltsls_sources = {
     },
     'states/roles': {
         'title': 'Roles',
-        'cross_ref_role': 'role',
+        'cross_ref_role': 'state',
         'build_dir': 'roles',
         'prefix': 'roles.',
         'title_prefix': 'Roles-',

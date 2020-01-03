@@ -68,8 +68,10 @@ Steps
 `[Source] <{{ sls.source_url }}>`_
 {%- endif %}
 {%- if sls.parent_name %}
+
 :doc:`[{{ sls.parent_name}} (main)] <main>`
 {%- endif %}
 {%- if sls.initfile and sls.child_count %}
+
 :doc:`[main] <main>`
 {%- endif %}

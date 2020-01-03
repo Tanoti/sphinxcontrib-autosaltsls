@@ -1,5 +1,7 @@
 ###
 # Pillar top file
 #
-'*':
-  - apache
+base:
+  ### topfile_id
+  '*':
+    - apache
