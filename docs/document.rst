@@ -5,14 +5,15 @@ A document comment block is a contiguous set of commented lines which follow an 
 semantically divided into a Summary (all text to the first blank line) and Content (the rest) and is known as an 'entry'
 by the parser.
 
-A block is identified by the parsing engine when it detects the start prefix specified by ``autosaltsls_doc_prefix``
-(default is '###'). Then all subsequent lines that start with the comment character specified by
-``autosaltsls_comment_prefix`` (default is '#') are loaded as data. The block ends when the first non-comment line
-or new block start string is read. Lines that begin with the ignore prefix specified in
-``autosaltsls_comment_ignore_prefix`` (default is '#!') are not parsed but will be loaded as the file format when it is
-the first line of the file.
+A block is identified by the parsing engine when it detects the start prefix specified by
+:confval:`autosaltsls_doc_prefix` (default is '###'). Then all subsequent lines that start with the comment character
+specified by :confval:`autosaltsls_comment_prefix` (default is '#') are loaded as data. The block ends when the first
+non-comment line or new block start string is read. Lines that begin with the ignore prefix specified in
+:confval:`autosaltsls_comment_ignore_prefix` (default is '#!') are not parsed but will be loaded as the file format when
+it is the first line of the file. Comment block lines should start at the beginning of each line with no leading spaces,
+however indented blocks are supported if :confval:`autosaltsls_indented_comments` is set to ``True``.
 
-The first document comment block in a file is denoted as being the Header and all other comment blocks are the Body.
+The first document comment block in a file is denoted as being the *Header* and all other comment blocks are the *Body*.
 This allows for the indexing routines to extract the header summaries, etc.
 
 Any valid Sphinx formatting commands should be able to be used in a document comment block.
