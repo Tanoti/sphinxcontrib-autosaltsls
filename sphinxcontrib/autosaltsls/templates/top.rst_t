@@ -13,14 +13,24 @@
 
 {%-   for entry in sls.body %}
 {%      if entry.has_text %}
-{%-       if entry.summary|length < 80 %}
-{{ entry.summary }}
-~~~~~~~{{ "~" * entry.summary|length }}
+{%-       if entry.environment %}
+Environment: {{ entry.summary }}
+==================={{ "=" * entry.summary|length }}
 {%-       else %}
+{%-         if entry.summary|length < 80 %}
+{{ entry.summary }} {{ "(Match: " + entry.match_type + ")" if entry.match_type else "" }}
+~~~~~~~~~~~~~~~~~~~~~~~~~~{{ "~" * entry.summary|length }}
+{%-         else %}
 {{ entry.summary }}
+{%-         endif %}
 {%-       endif %}
 
 {{ entry.content }}
+{%-     endif %}
+{%-     if entry.include %}
+{%-       for item in entry.includes %}
+    * :{{ sls.source_settings.cross_ref_role }}:`{{ item }}`
+{%-       endfor %}
 {%-     endif %}
 {%-   endfor %}
 {%- endif %}

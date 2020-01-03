@@ -23,57 +23,70 @@ Directives
 Within a file and its document comment blocks the parsing can be manipulated by directives. These follow the document
 start prefix (multiple directives can be supplied by separating them with commas although this is not often needed).
 
-.. confval:: topfile
+.. confval:: environment
 
-    Scope: File
+    *Scope: Entry*
 
-    Identifies the current sls file as a salt top file (See
-    `Salt Top Files <https://docs.saltstack.com/en/latest/ref/states/top.html>`_). Files with the name ``top.sls`` are
-    automatically identified so this is only needed for alternate top files that might be passed to ``state.top``.
+    Use the following line as a topfile environment (e.g. 'base', 'production').
 
 .. confval:: hidden
 
-    Scope: File
+    *Scope: File*
 
     Do not generate documentation for this file, also sets :confval:`ignore`.
 
 .. confval:: ignore
 
-    Scope: File
+    *Scope: File*
 
     Immediately stop processing the file. Any entries already found are returned as normal.
 
 .. confval:: include
 
-    Scope: Entry
+    *Scope: Entry*
 
     Provided the line following this directive is ``include:`` then the entries for that YAML key will be read into a
     list of includes to be rendered as cross-ref links to other sls files if possible.
 
 .. confval:: show_id
 
-    Scope: Entry
+    *Scope: Entry*
 
     Read the first line following this comment block and add it as a content line.
 
-.. confval:: summary_id
-
-    Scope: Entry
-
-    Read the first line following this comment block and add it as the entry summary.
-
 .. confval:: step
 
-    Scope: Entry
+    *Scope: Entry*
 
     This entry is to be added to the numbered list of steps
 
 .. confval:: step_id
 
-    Scope: Entry
+    *Scope: Entry*
 
     Read the first line following this comment block and add it as summary, then add the entry to the numbered list
     of steps
+
+.. confval:: summary_id
+
+    *Scope: Entry*
+
+    Read the first line following this comment block and add it as the entry summary.
+
+.. confval:: topfile
+
+    *Scope: File*
+
+    Identifies the current sls file as a salt top file (See
+    `Salt Top Files <https://docs.saltstack.com/en/latest/ref/states/top.html>`_). Files with the name ``top.sls`` are
+    automatically identified so this is only needed for alternate top files that might be passed to ``state.top``.
+
+.. confval:: topfile_id
+
+    *Scope: Entry*
+
+    Read the first line following this comment block and add it as the entry summary then process the following lines to
+    extract the matching criteria and sub-lines for generating cross-references.
 
 Cross-referencing SLS files
 ----------------------------

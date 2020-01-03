@@ -306,11 +306,17 @@ class AutoSaltSLS(object):
                         line, self.source_settings.comment_prefix,
                     ):
                         # Capture the first line (YAML ID) as content
-                        if entry.show_id or entry.summary_id or entry.step_id:
+                        if entry.process_id():
+                            # Line ending with a colon
                             if line[-1] == ":":
                                 line = line[:-1]
+                            # In-line sls in a top file
+                            elif entry.topfile_id and ":" in line:
+                                fields = line.split(":")
+                                entry.add_include(fields[1].strip())
+                                line = fields[0].strip()
 
-                            if entry.summary_id or entry.step_id:
+                            if entry.prepend_id:
                                 # Prepend with a newline so the summary is correctly identified later
                                 entry.prepend_line("")
 
@@ -319,21 +325,36 @@ class AutoSaltSLS(object):
                                     line = line.lstrip(" ")
 
                                 entry.prepend_line(line)
+
+                                # Clear the process_id flag and force another line to be read so we can parse the
+                                # block entries as includes
+                                if entry.topfile_id:
+                                    entry.process_id(False)
+                                    continue
                             else:
                                 entry.append_line(line)
 
-                        # Read all the include entries (flag set by directive above)
-                        elif entry.include:
+                        # Read all the include or topfile entries (flag set by directive above)
+                        elif entry.include or entry.topfile_id:
                             if "include:" in line:
                                 included = True
                                 continue
-                            elif included and line and not line.isspace():
+                            elif (
+                                (included or entry.topfile_id)
+                                and line
+                                and not line.isspace()
+                            ):
                                 # Use regex to match an include entry and store it
                                 # First non-match will trigger block end
-                                match = re.search("^\s+-\s+([\w\-.]+)", line)
+                                match = re.search("^\s+-\s+([\s\w\-.:]+)", line)
                                 if match:
                                     text = match.group(1)
 
+                                    if "match:" in text:
+                                        entry.match_type = text.replace(
+                                            "match:", ""
+                                        ).strip()
+                                        continue
                                     if text.startswith("."):
                                         text = "{0} <{1}{2}>".format(
                                             text,
@@ -539,6 +560,15 @@ class AutoSaltSLSEntry(object):
         Directives are run-time changes to apply to an entry. They are specified on the document prefix line as a
         comma-separated list
 
+        environment
+            Use the following line as a topfile environment (e.g. 'base', 'production')
+
+        hidden
+            Do not generate documentation for this file, also sets ``ignore``
+
+        ignore
+            Immediately stop processing the file. Any entries already found are returned as normal
+
         include
             The lines following this comment block will be an ``include:`` section and should be parsed to add the YAML
             list data items to the ``includes`` list
@@ -555,22 +585,30 @@ class AutoSaltSLSEntry(object):
 
         summary_id
              Read the first line following this comment block and add it as the entry summary
+
+         topfile_id
+            Read the first line following this comment block and add it as the entry summary then process the following
+             lines to extract the matching criteria and sub-lines for generating cross-references
     """
 
     def __init__(self, text=None):
         self.lines = []
         self.includes = []
+        self.match_type = None
 
         # Directives
+        self.environment = False
         self.include = False
         self.show_id = False
         self.step = False
         self.step_id = False
         self.summary_id = False
+        self.topfile_id = False
 
         # Internal properties
         self._summary = None
         self._content = None
+        self._process_id = None
 
         # Initialise with any text we've been given
         if text is not None:
@@ -581,12 +619,14 @@ class AutoSaltSLSEntry(object):
 
     def add_include(self, include):
         """
-        Add an include statement to the list.
+        Add an include statement to the list and set the ``include`` property.
 
         include
             Include statement to add
         """
+        logger.debug("JPH - Adding include [{0}]".format(include))
         self.includes.append(include)
+        self.include = True
 
     @property
     def annotated_text(self):
@@ -649,6 +689,18 @@ class AutoSaltSLSEntry(object):
         """
         return self.step or self.step_id
 
+    @property
+    def prepend_id(self):
+        """
+        Return whether this entry should prepend the YAML id to the output
+
+        :return: bool
+        """
+        if self.summary_id or self.step_id or self.environment or self.topfile_id:
+            return True
+
+        return False
+
     def prepend_line(self, text):
         """
         Add some text to the start of the content line list.
@@ -660,6 +712,27 @@ class AutoSaltSLSEntry(object):
 
         # Reset the internal content property
         self._content = None
+
+    def process_id(self, new_val=None):
+        """
+        Flag to show whether this entry requires YAML id processing. If not set and no ``new_val`` supplied, then
+        the flag value is calculated based on other directive attributes.
+
+        :return: bool
+        """
+        if new_val is not None:
+            self._process_id = new_val
+        elif self._process_id is None:
+            if (
+                self.show_id
+                or self.summary_id
+                or self.step_id
+                or self.environment
+                or self.topfile_id
+            ):
+                self._process_id = True
+
+        return self._process_id
 
     @property
     def summary(self):
