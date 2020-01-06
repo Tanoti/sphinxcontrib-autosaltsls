@@ -1,6 +1,11 @@
 History
 ========
 
+0.5.1 (2020-01-06)
+--------------------
+
+* Use literal formatting for ``topfile_id`` entries in ``top.rst_t``
+
 0.5.0 (2020-01-03)
 --------------------
 
