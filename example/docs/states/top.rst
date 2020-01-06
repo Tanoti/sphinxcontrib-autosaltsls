@@ -27,8 +27,8 @@ Environment: production
 
 Production states only
 
-``'I@role:proxy'`` (Match: compound)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``'role:proxy'`` (Match: grain)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
     * :state:`roles.proxy`
