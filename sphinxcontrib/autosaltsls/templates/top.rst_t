@@ -18,7 +18,7 @@ Environment: {{ entry.summary }}
 ==================={{ "=" * entry.summary|length }}
 {%-       else %}
 {%-         if entry.summary|length < 80 %}
-{{ entry.summary }} {{ "(Match: " + entry.match_type + ")" if entry.match_type else "" }}
+``{{ entry.summary }}`` {{ "(Match: " + entry.match_type + ")" if entry.match_type else "" }}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~{{ "~" * entry.summary|length }}
 {%-         else %}
 {{ entry.summary }}

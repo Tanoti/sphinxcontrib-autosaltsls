@@ -10,13 +10,13 @@ Environment: base
 
 Common to all salt environments
 
-'*' 
+``'*'`` 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All minions run these states
     * :state:`nrpe`
 
-'role:webserver' (Match: grain)
+``'role:webserver'`` (Match: grain)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -27,8 +27,8 @@ Environment: production
 
 Production states only
 
-'role:proxy' (Match: grain)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``'I@role:proxy'`` (Match: compound)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
     * :state:`roles.proxy`
