@@ -1,6 +1,16 @@
 History
 ========
 
+0.5.3 (2020-01-06)
+--------------------
+
+* Ensure blank line before 'include' list on top file page
+
+0.5.2 (2020-01-06)
+--------------------
+
+*  Fixed bug where an 'include' element in a top file with a trailing space generates a Sphinx rendering error
+
 0.5.1 (2020-01-06)
 --------------------
 
