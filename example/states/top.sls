@@ -11,7 +11,7 @@ base:
   ### topfile_id
   'role:webserver':
     - match: grain
-    - roles.webserver
+    - roles.webserver # This comment is ignored
 
 ### environment
 # Production states only

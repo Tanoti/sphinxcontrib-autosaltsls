@@ -624,8 +624,7 @@ class AutoSaltSLSEntry(object):
         include
             Include statement to add
         """
-        logger.debug("JPH - Adding include [{0}]".format(include))
-        self.includes.append(include)
+        self.includes.append(include.strip(" "))
         self.include = True
 
     @property
