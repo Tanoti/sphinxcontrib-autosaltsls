@@ -1,6 +1,14 @@
 History
 ========
 
+0.5.4 (2020-01-07)
+--------------------
+
+* Removed "Entries" section from main.rst_t as it is superfluous.
+* Fixed formatting of links at bottom of page
+* Changes filename to title attribute in top.rst_t so it renders the correct data
+* Added missing rst files in example directory
+
 0.5.3 (2020-01-06)
 --------------------
 
