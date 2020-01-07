@@ -1,5 +1,5 @@
-``kickstarting.sls``
-***********************
+``kickstarting.sls (state)``
+*******************************
 
 *Alternate top file for use when kickstarting a host*
 
@@ -7,6 +7,7 @@
 
 ``'*'`` 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 
     * :state:`nrpe`

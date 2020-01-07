@@ -21,13 +21,6 @@
 {%- endif %}
 
 {%- if sls.child_count %}
-
-Elements
-^^^^^^^^
-.. contents::
-    :depth: 1
-    :local:
-
 {%-   for child_sls in sls.children %}
 {%-     if not child_sls.initfile and child_sls.docname %}
 
