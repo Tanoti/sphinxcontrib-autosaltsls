@@ -65,6 +65,7 @@ Steps
 
 
 {%- if sls.source_url %}
+
 `[Source] <{{ sls.source_url }}>`_
 {%- endif %}
 {%- if sls.parent_name %}

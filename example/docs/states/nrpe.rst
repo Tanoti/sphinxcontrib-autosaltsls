@@ -19,3 +19,6 @@ Steps
     Start the service and enable at boot time
 
 
+
+
+`[Source] <https://bitbucket.tools.ficoccs-dev.net/projects/DEVOPS/repos/salt-master-fileset/browse/states/./nrpe.sls>`_
