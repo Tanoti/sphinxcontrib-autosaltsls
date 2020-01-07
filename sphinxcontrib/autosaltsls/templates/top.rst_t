@@ -1,5 +1,5 @@
-``{{ sls.filename}}``
-*******{{ "*" * sls.filename|length }}
+``{{ sls.title}}``
+*******{{ "*" * sls.title|length }}
 {%- if not sls.entries %}
 *No content*
 {%- else %}
