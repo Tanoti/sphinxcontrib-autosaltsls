@@ -1,6 +1,11 @@
 History
 ========
 
+0.5.5 (2020-01-07)
+--------------------
+
+* Fixed formatting in sls.rst_t when no content found and source url enabled
+
 0.5.4 (2020-01-07)
 --------------------
 
