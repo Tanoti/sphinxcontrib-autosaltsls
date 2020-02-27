@@ -367,6 +367,10 @@ class AutoSaltSLS(object):
                                     entry.add_include(text)
                                     continue
 
+                                # Skip any jinja directives within the includes
+                                if "{%" in line or "{%" in line:
+                                    continue
+
                         # Add the entry to the main list
                         self.add_entry(entry)
                         entry = None
