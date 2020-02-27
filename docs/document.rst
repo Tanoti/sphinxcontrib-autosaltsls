@@ -46,7 +46,8 @@ start prefix (multiple directives can be supplied by separating them with commas
     *Scope: Entry*
 
     Provided the line following this directive is ``include:`` then the entries for that YAML key will be read into a
-    list of includes to be rendered as cross-ref links to other sls files if possible.
+    list of includes to be rendered as cross-ref links to other sls files if possible. Jinja statements between include
+    lines are ignored.
 
 .. confval:: show_id
 
