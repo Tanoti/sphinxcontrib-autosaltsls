@@ -368,7 +368,7 @@ class AutoSaltSLS(object):
                                     continue
 
                                 # Skip any jinja directives within the includes
-                                if '{%' in line or '{%' in line:
+                                if "{%" in line or "{%" in line:
                                     continue
 
                         # Add the entry to the main list
