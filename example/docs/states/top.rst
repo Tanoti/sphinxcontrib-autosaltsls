@@ -37,5 +37,3 @@ Production states only
 
 
     * :state:`roles.proxy`
-
-`[Source] <https://bitbucket.tools.ficoccs-dev.net/projects/DEVOPS/repos/salt-master-fileset/browse/states/./top.sls>`_
