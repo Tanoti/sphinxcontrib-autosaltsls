@@ -1,6 +1,11 @@
 History
 ========
 
+0.5.6 (2020-02-27)
+--------------------
+
+* Skip jinja statements within include section
+
 0.5.5 (2020-01-07)
 --------------------
 
