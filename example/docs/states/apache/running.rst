@@ -20,6 +20,4 @@ Steps
 
 
 
-
-`[Source] <https://bitbucket.tools.ficoccs-dev.net/projects/DEVOPS/repos/salt-master-fileset/browse/states/apache/running.sls>`_
 :doc:`[apache (main)] <main>`

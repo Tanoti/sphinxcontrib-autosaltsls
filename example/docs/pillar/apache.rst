@@ -13,5 +13,3 @@ absent_files
 ~~~~~~~~~~~~~~~~~~~
 
 List of files that should be removed from /etc/httpd/conf.d
-
-`[Source] <https://bitbucket.tools.ficoccs-dev.net/projects/DEVOPS/repos/salt-master-fileset/browse/pillar/./apache.sls>`_
