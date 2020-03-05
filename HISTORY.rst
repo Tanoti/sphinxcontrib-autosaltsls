@@ -1,6 +1,11 @@
 History
 ========
 
+0.6.1 (2020-03-05)
+--------------------
+
+* Fix render issue with step_id lists where there are more than 9 entries
+
 0.6.0 (2020-02-27)
 --------------------
 
