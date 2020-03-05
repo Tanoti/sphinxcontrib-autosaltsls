@@ -45,7 +45,7 @@ Steps
 {%-       else %}
 {{ loop.index }}. {{ entry.summary }}
 {%-       endif %}
-    {{ entry.content }}
+       {{ entry.content }}
 {%-     endfor %}
 {%-   endif %}
 
