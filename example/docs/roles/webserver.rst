@@ -17,5 +17,5 @@ Includes
 Steps
 ^^^^^
 1. ``webserver_content_deployed``
-    Deploy the webserver content after Apache has been installed
+       Deploy the webserver content after Apache has been installed
 

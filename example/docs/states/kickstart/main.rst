@@ -1,8 +1,6 @@
 ``kickstart (state)``
 ************************
 
-.. state:: kickstart
-
 *No content*
 
 :doc:`kernel_settings_made <kernel_settings_made>`
