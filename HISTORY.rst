@@ -1,6 +1,12 @@
 History
 ========
 
+0.7.0 (2020-05-04)
+--------------------
+
+* Remove cross-ref index from main.rst_t file as duplicated in sls.rst_t and caused render warning under Sphinx v3
+* Added roles examples
+
 0.6.1 (2020-03-05)
 --------------------
 
