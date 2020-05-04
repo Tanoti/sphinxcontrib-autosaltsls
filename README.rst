@@ -91,3 +91,5 @@ Credits
 This project was based on the logic behind both `readthedocs/sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_
 and `Jakski/sphinxcontrib-autoyaml <https://github.com/Jakski/sphinxcontrib-autoyaml>`_, so many thanks to those projects
 for getting me started.
+
+[~ Dependencies scanned by PyUp.io ~ ]
