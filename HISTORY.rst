@@ -1,6 +1,11 @@
 History
 ========
 
+0.7.1 (2020-06-09)
+--------------------
+
+* PR from joopert to fix issue with using chdir on multi-level autosaltsls_build_root
+
 0.7.0 (2020-05-04)
 --------------------
 
