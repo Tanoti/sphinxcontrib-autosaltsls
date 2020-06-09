@@ -362,7 +362,7 @@ class AutoSaltSLSMapper(object):
             )
 
             try:
-                os.mkdir(self.build_root)
+                os.makedirs(self.build_root)
             except PermissionError:
                 raise ExtensionError(
                     "Could not create '{0}, permission denied".format(self.build_root)
