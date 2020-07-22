@@ -236,7 +236,7 @@ class AutoSaltSLS(object):
 
                     # Grab the file format from the first line of the file
                     if line.startswith("#!") and line_no == 1:
-                        self.format = line.replace("#!", "").strip()
+                        self.format = line.replace("#!", "", 1).strip()
 
                     # Skip lines starting with comment ignore prefix (e.g. '#!')
                     if self._check_line_startswith(
@@ -257,7 +257,7 @@ class AutoSaltSLS(object):
                         entry = AutoSaltSLSEntry()
 
                         # Strip off the prefix
-                        line = line.replace(self.source_settings.doc_prefix, "")
+                        line = line.replace(self.source_settings.doc_prefix, "", 1)
 
                         # Check for directive keywords, stripping spaces from the fields
                         if line and not line.isspace():
@@ -384,7 +384,7 @@ class AutoSaltSLS(object):
                         if self.app.config.autosaltsls_indented_comments:
                             line = line.lstrip(" ")
 
-                        line = line.replace(self.source_settings.comment_prefix, "")
+                        line = line.replace(self.source_settings.comment_prefix, "", 1)
 
                         if self.app.config.autosaltsls_remove_first_space:
                             line = line[1:]
