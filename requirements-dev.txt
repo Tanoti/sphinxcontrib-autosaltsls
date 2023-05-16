@@ -1,4 +1,4 @@
  -e .
 Jinja2==2.11.2
 black==19.10b0
-Sphinx==3.1.2
+Sphinx==7.0.1
