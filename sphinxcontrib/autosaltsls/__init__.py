@@ -14,7 +14,7 @@ from .mapper import AutoSaltSLSMapper
 
 __author__ = """John Hicks"""
 __email__ = "john@tanoti.org"
-__version__ = "0.7.2"
+__version__ = "0.7.3"
 
 SETTINGS_STRING = [
     "build_dir",
